@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE|default:"en-us" }}" xml:lang="{{ LANGUAGE_CODE|default:"en-us" }}" {%  if LANGUAGE_BIDI %}dir="rtl"{%  endif %}>
+    <head>
+        
+        <link href="/site_media/django/css/base.css" media="screen" rel="stylesheet" type="text/css"/>
+		<link href="/site_media/techmania/Techmania.css" media="screen" rel="stylesheet" type="text/css"/>
+        {% block extrahead %}
+        <script type="text/javascript" src="/site_media/js/jquery/js/jquery-1.5.1.min.js">
+        </script>
+        <script type="text/javascript" src="/site_media/js/jquery/js/jquery-ui-1.8.11.custom.min.js">
+        </script>
+        <script type="text/javascript">
+            
+            
+            
+            function updateCombo(combo_id, value, text){
+                //alert("enter" + combo_id + " " + value + " " + text);
+                $('#' + combo_id).append(new Option(text, value));
+            }
+            
+            function showPopup(href, h, w){
+            
+            
+            
+                var left = (window.screen.width - h) / 2;
+                var top = (window.screen.height - w) / 2
+                
+                
+                var win = window.open(href, "", 'height=' + h + ',width=' + w + ',left=' + left + ',top=' + top + ',resizable=no,scrollbars=no,statusbar=0');
+                win.focus();
+                return false;
+            }
+        </script>
+        {% endblock %}
+    </head>
+    {% load i18n %}
+    <body>
+        {% block header %}
+        <table border="0">
+            <tr>
+                <td>
+                    <div id="logo">
+                        Fixy 
+                    </div>
+                </td>
+				<td width="400"></td>
+                <td>
+                	<!--
+                    <br/>
+                    <a href="">{% trans 'Like Us on Facebook' %} </a>
+                    <br/>
+                    <a href="">{% trans 'Follow Us on TWITTER' %}</a>-->
+                </td>
+                <td>
+                    <a href="/administration/logout_user">{% trans "Logout" %}</a>
+                </td>
+            </tr>
+        </table>
+        {% endblock %}
+        {% block menubar %}
+        <div id="header-tabs">
+            <ul>
+            	<li>
+                    <a href="/administration/dashboard/">{% trans 'Dashboard' %}</a>
+                </li>
+            	<!--
+                <li>
+                    <a href="">{% trans 'Appointments calendar' %}</a>
+                </li>
+				-->
+                <li>
+                    <a href="/administration/salon/user/{{user.id}}">{% trans 'Salons' %}</a>
+                </li>
+                <li>
+                    <a href="">{% trans 'Your team' %}</a>
+                </li>
+                <li>
+                    <a href="">{% trans 'Your Services' %}</a>
+                </li>
+                <li>
+                  <a href="/administration/users/">{% trans "Admins" %}</a>
+                </li>
+				<!--
+                <li>
+                    <a href="">{% trans 'Reporting' %}</a>
+                </li>
+				-->
+            </ul>
+        </div>
+        <br/>
+        {% endblock %}
+        <table>
+            <tr>
+                <td>
+                <div id="leftsidebar">
+                    {% block leftsidebar %}
+                    {% endblock %}
+                </div>
+                <!-- end side bar  -->
+                </div>
+            </td>
+            <td valign="top">
+                <!-- Content -->
+				<div id="content">
+                {% block content %}{% endblock %}
+				</div>
+            </td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,15 @@
+.text95 {
+	padding: 3px 4px;
+	border-width: 1px;
+	border-style: solid;
+	-moz-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	font-size: 1.7em;
+	width: 100%;
+	outline: none;
+}
+.invisible {
+	display: none;
+}

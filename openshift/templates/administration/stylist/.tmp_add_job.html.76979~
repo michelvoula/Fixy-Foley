@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+ {% load i18n admin_modify adminmedia %}
+   {% block extrastyle %}
+   {{ block.super }}
+      
+       <link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+  {% endblock %}
+{% block fcontent %}
+
+
+	<form action="/salon/addjob/id_jobTitle/" method="post">
+	{% csrf_token %}
+	
+	
+	<table>
+		{{form.as_table}}
+		</table>
+		<input type="submit" value="save">
+</form>
+{% endblock %}

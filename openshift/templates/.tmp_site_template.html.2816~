@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>{{head_title}}</title>
+        <link href="/site_media/css/jquery-ui.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="/site_media/css/default.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="/site_media/css/common.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="/site_media/sample-style/ui-sui.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="'/uploader/uploadify/uploadify.css" type="text/css" />
+        <script type="text/javascript" src="/site_media//js/jquery/jquery-plus-jquery-ui.js">
+        </script>
+        <script type="text/javascript" src="/site_media/js/jquery/email_validator.js">
+        </script>
+        <script type="text/javascript" src="/site_media/js/jquery/jquery.form.js">
+        </script>
+        <script type="text/javascript" src="/site_media/js/common.js">
+        </script>
+        <script type="text/javascript" src="/site_media/uploader/js/jquery.uploadify.js">
+        </script>
+        <script type="text/javascript" src="/site_media/js/jquery/jquery.numeric.js">
+        </script>
+        <script type="text/javascript" src="/site_media/js/tiny_mce/tiny_mce.js">
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#accordions").accordion({
+                    header: "h6"
+                });
+                $("#sb1menu").accordion({
+                    header: "h6"
+                });
+                
+                var options = {
+                    target: '#content', // target element(s) to be updated with server response
+                    beforeSubmit: ValidateForm, // pre-submit callback
+                    success: SubmitForm // post-submit callback
+                };
+                
+                
+                $('#form').submit(function(){
+                
+                    $(this).ajaxSubmit(options);
+                    
+                    return false;
+                });
+                
+                
+                $('#form').bind('form-pre-serialize', function(e){
+                    tinyMCE.triggerSave();
+                });
+                
+            });
+        </script>
+    </head>
+    <body>
+    <div id="wrapper">
+        <!-- start header -->
+		
+        <div id="logo">
+            <h1><a href="#">FIXY</a></h1>
+			
+            
+        </div>
+		
+        <div id="header">
+            <div id="menu">
+            </div>
+        </div>
+        <!-- end header -->
+
+    <!-- start page -->
+    <div id="pop">
+    </div>
+    <div id="waiting_message" class="invisible">
+    </div>
+    <input type="hidden" id="baseURL"/>
+    <div id="page">
+        <div id="sidebar1">
+        	<table width="200" border="0" cellspacing="25">
+    <tr>
+        <td>
+        	<a href="/salon/{{salon.id}}/">Your Salon</a>
+        </td>
+    </tr>
+    <tr>
+       
+    </tr>
+    <tr>
+        <td>
+        	
+        	<a href="/salon/stylist/{{salon.id}}/">Your Stylists</a>
+        </td>
+       
+    </tr>
+</table>
+
+        </div>
+        <!-- start content -->
+        <div id="content">
+        	
+        	{% block content %}{% endblock %}
+        </div>
+        <!-- end content --><!-- start sidebar -->
+        <div id="sidebar2">
+        	
+			Hello MVN
+        </div>
+  
+    <!-- end sidebar -->
+    <div style="clear: both;">
+        &nbsp;
+    </div>
+    </div>
+    <!-- end page --><!-- start footer -->
+    <div id="footer">
+        <p id="legal">
+            ( c ) 2011. All Rights Reserved. <a href="#">VRC</a>
+            designed by <a href="#">Michel VOULA</a>.
+        </p>
+    </div>
+    <!-- end footer -->
+	</div>
+</body>
+</html>

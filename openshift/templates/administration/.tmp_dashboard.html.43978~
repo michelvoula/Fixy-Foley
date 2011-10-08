@@ -1,0 +1,180 @@
+{% extends "administration/index.html" %}
+    {% load i18n %}
+        {% block content %}   
+		
+                    <div id="welcome_mess">
+                        {% trans 'Welcome Salon Owner' %} 
+                    </div>
+                 
+        <table border="0">
+            <tr>
+                <td colspan=4 style="text-align:left;">
+                    {% trans 'DASHBOARD' %} 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0">
+                        <tr class="table_title">
+                            <td colspan=2 style="text-align:left;">
+                                {% trans 'Your Salons Bookings this week' %} 
+                            </td>
+                        </tr>
+                        <tr class="table_header">
+                            <td>
+                                {% trans 'Salon' %} 
+                            </td>
+                            <td>
+                                {% trans 'Bookings' %} 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                PONSON BY
+                            </td>
+                            <td>
+                                10
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table border="0">
+                        <tr class="table_title">
+                            <td colspan=3 style="text-align:left;">
+                                {% trans "Top Team Member Status's" %} 
+                            </td>
+                        </tr>
+                        <tr class="table_header">
+                            <td>
+                                {% trans 'Member' %} 
+                            </td>
+                            <td>
+                                {% trans 'Discount Tier' %} 
+                            </td>
+                            <td>
+                                {% trans 'Bookings this week' %} 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Kate
+                            </td>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                10
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Wills
+                            </td>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                10
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Queenies
+                            </td>
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                10
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table border="0">
+                        <tr class="table_title">
+                            <td colspan=3 style="text-align:left;">
+                                {% trans "Top Selling Services" %} 
+                            </td>
+                        </tr>
+                        <tr class="table_header">
+                            <td>
+                            </td>
+                            <td>
+                                {% trans 'Discount(%)' %} 
+                            </td>
+                            <td>
+                                {% trans 'Bookings this week' %} 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                CUT
+                            </td>
+                            <td>
+                                none
+                            </td>
+                            <td>
+                                17
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                COLOR
+                            </td>
+                            <td>
+                                10
+                            </td>
+                            <td>
+                                10
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table border="1">
+                        <tr>
+                            <td>
+                                <span class="block_title">{% trans "YOUR ADMINS" %} </span>
+                                <p<span class="block_title">{% trans "YOUR ADMINS" %} </span>
+                                    <P>
+                                </p>
+                                <span class="block_title2">{% trans "Branch Managers" %} </span>
+                                <ul>
+                                    <li>
+                                        JIM
+                                    </li>
+                                    <li>
+                                        BOB
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                View Sales Reporting
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        {% endblock %}
+    

@@ -1,0 +1,1 @@
+INSERT INTO salon_country (id,str_name) VALUES (1,'New Zealand');

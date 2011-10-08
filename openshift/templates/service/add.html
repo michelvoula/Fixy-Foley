@@ -1,0 +1,71 @@
+{% extends "service/salon_service.html" %}
+ {% load i18n admin_modify adminmedia %}
+   {% block extrastyle %}
+   {{ block.super }}
+      
+       <link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+     
+  {% endblock %}
+{% load i18n %} 
+{% block service_detail %}
+	
+<h1>{% trans "Edit Service" %} {{service.service.str_name}} </h1>
+<p>
+	{% if errors %}
+    <p class="errornote">
+    {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+{% endif %}
+</p>
+<form action="/salon/service/add/{{salon.id}}/" method="post">
+	{% csrf_token %}
+	
+	
+	<table>
+		
+		
+	
+		 <tr>
+           <td>{{form.service.label_tag}}
+		   <br/>
+		   {{ form.service }}
+		   </td>
+           	
+		   
+		   <td>{{form.length.label_tag}}
+		   <br/>
+		   {{ form.length }}
+		   </td>
+           	
+          
+			</tr>
+			
+			<tr>
+           <td>{{form.discount_type.label_tag}}</td>
+           	
+           <td>{{ form.discount_type }}</td> 
+		   </tr>
+			
+			<tr>
+		   
+		   <td>{{form.discount_percentage.label_tag}}</td>
+           	
+           <td>{{ form.discount_percentage }}</td> 
+		   </tr>
+			
+			<tr>
+		   
+		   <td>{{form.number_appointment.label_tag}}</td>
+           	
+           <td>{{ form.number_appointment }}</td> 
+			</tr>
+  
+
+
+</table>
+<input type="submit" value="{% trans "Save" %}"/>
+</form>
+
+
+{% endblock %}

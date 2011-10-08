@@ -1,0 +1,139 @@
+{% extends "administration/index.html" %} 
+{% load i18n %}  
+{% block content %} 
+<div class="page_title">
+    <center>
+        <h1>{% trans 'Welcome Salon Owner' %} </h1>
+    </center>
+</div>
+<div class="page_content">
+    <h3>{% trans 'DASHBOARD' %}<h3>
+        </legend>
+        <table border="0">
+            <tr>
+                <td>
+                    <div class="dashboard_table_div">
+                        <div class="dashboard_table_title">
+                            {% trans 'YOUR SALONS' %}
+                        </div>
+                        <table>
+                            <tr>
+                                <th witdh="150">
+                                </th>
+                                <th witdh="100">
+                                    {% trans 'FIXY Bookings this week' %} 
+                                </th>
+                            </tr>
+                            {% for salon in salons %} 
+                            <tr>
+                                <td witdh="150">
+                                    {{ salon.str_name }}
+                                </td>
+                                <td witdh="100" style="text-align:right;">
+                                    0
+                                </td>
+                            </tr>
+                            {% endfor %} 
+                        </table>
+                    </div>
+                    <div class="go_div">
+                        <a href="/administration/salon/user/{{user.id}}">{% trans "Go" %}</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="dashboard_table_div">
+                        <div class="dashboard_table_title">
+                            {% trans "TOP TEAM MEMBER STATUS'S" %} 
+                        </div>
+                        <table border="0">
+                            <tr class="table_header">
+                                <th width="125">
+                                </th>
+                                <th width="75">
+                                    {% trans 'Discount Tier' %} 
+                                </th>
+                                <th width="50">
+                                {% trans 'Bookings this week' %} 
+                                </td>
+                            </tr>
+                            {% for stylist in stylists %}
+                            <tr>
+                                <td>
+                                    {{ stylist }}
+                                </td>
+                                <td>
+                                    {% with stylist.discounttype_set.all|first as first_object %}
+                                    {{ first_object }}
+                                    {% endwith %}
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="go_div">
+                        <a href="/administration/salon/user/{{user.id}}">{% trans "Go" %}</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="dashboard_table_div">
+                        <div class="dashboard_table_title">
+                            {% trans "Top Selling Services" %} 
+                        </div>
+                        <table border="0">
+                            <tr class="table_header">
+                                <th width="125">
+                                </th>
+                                <th width="75">
+                                    {% trans 'Discount(%)' %} 
+                                </th>
+                                <th width="100">
+                                    {% trans 'Bookings this week' %} 
+                                </th>
+                            </tr>
+                            {% for salonservice in services %}
+                            <tr>
+                                <td>
+                                    {{ salonservice.service.str_name }}
+                                </td>
+                                <td>
+                                    {{ salonservice}}
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="go_div">
+                        <a href="/administration/salon/user/{{user.id}}">{% trans "Go" %}</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="dashboard_table_admin">
+                        <span class="dashboard_table_title">{% trans "YOUR ADMINS" %} </span>
+                        <P>
+                        </p>
+                        <span class="block_title2"><b>{% trans "Branch Managers" %}</b></span>
+                        <ul>
+                            {% for admin in admins %}
+                            <li>
+                                {{ admin.user.first_name }}  {{ admin.user.last_name }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="go_div">
+                        <a href="/administration/users/">{% trans "Go" %}</a>
+                    </div>
+                    <div class="div_bordered">
+                    </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="page_content">
+            {% endblock %}

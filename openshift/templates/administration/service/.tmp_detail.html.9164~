@@ -1,0 +1,80 @@
+93{% extends "administration/service/salon_service.html" %}
+{% load i18n %} 
+{% block service_detail %}
+	{% if service %}
+<h1>{% trans "Service" %} {{service.service.str_name}} </h1>
+<p>
+	
+</p>
+<table  border="0">
+    <tr>
+        <td>
+        	
+	
+	<table>
+		
+		
+	
+		 <tr>
+           <td>{% trans "Service" %}
+		 </td><td>  {{ service.service.str_name }}</td>
+		 
+		 
+           	
+		   <tr>
+		   
+		   <td>{% trans "Length" %}
+		   
+		   
+		   </td>
+           	<td>{{ service.length }}</td>
+          
+			</tr>
+			
+			<tr>
+           <td>{% trans "Discount" %}</td>
+           	
+         <td>
+		   {{ service.discount_type }}
+		   </td> 
+		   </tr>
+			
+			
+			
+			<tr>
+		   
+		   <td>{% trans "Number of Appointment" %}</td>
+           	
+           <td>{{ service.number_appointment }}</td> 
+			</tr>
+  
+
+
+</table>
+
+</form>
+        </td>
+        <td>
+        	
+				{% if perms.salonservice.edit_salonservice %}
+			
+			<a href="/administration/salon/service/edit/{{service.id}}/">{% trans "Edit This Service" %}</a>
+			
+			{% endif %}
+			<br/>
+			
+			{% if perms.salonservice.delete_salonservice %}
+			
+			<a href="/administration/salon/service/delete/{{service.id}}/">{% trans "Delete This Service" %}</a>
+			
+			{% endif %}
+			
+			
+        </td>
+    </tr>
+</table>
+
+
+{% endif %}
+
+{% endblock %}

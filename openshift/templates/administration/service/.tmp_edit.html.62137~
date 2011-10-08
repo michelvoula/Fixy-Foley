@@ -1,0 +1,101 @@
+{% extends "service/salon_service.html" %}
+ {% load i18n admin_modify adminmedia %}
+   {% block extrastyle %}
+   {{ block.super }}
+      
+       <link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+     
+  {% endblock %}
+{% load i18n %} 
+{% block service_detail %}
+	{% if service %}
+<h1>{% trans "Edit Service" %} {{service.service.str_name}} </h1>
+<p>
+	{% if errors %}
+    <p class="errornote">
+    {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+{% endif %}
+</p>
+<table  border="0">
+    <tr>
+        <td>
+        	<form action="/salon/service/edit/{{service.id}}/" method="post">
+	{% csrf_token %}
+	
+	
+	<table>
+		
+		
+	
+		 <tr>
+           <td>{{form.service.label_tag}}
+		   <br/>
+		   {{ form.service }}
+		   <br/>
+	     {% trans "Service not listed?" %}	   
+		      <br/>
+			  
+	     <a href="javascript:void()" onclick="showPopup('/salon/addservice/1/');">{% trans "request new Service" %}	</a>
+		   </td>
+           	
+		   
+		   <td>{{form.length.label_tag}}
+		   <br/>
+		   {{ form.length }}
+		   </td>
+           	
+          
+			</tr>
+			
+			<tr>
+           <td>{{form.discount_type.label_tag}}</td>
+           	
+           <td>{{ form.discount_type }}</td> 
+		   </tr>
+			
+			<tr>
+		   
+		   <td>{{form.discount_percentage.label_tag}}</td>
+           	
+           <td>{{ form.discount_percentage }}</td> 
+		   </tr>
+			
+			<tr>
+		   
+		   <td>{{form.number_appointment.label_tag}}</td>
+           	
+           <td>{{ form.number_appointment }}</td> 
+			</tr>
+  
+
+
+</table>
+<input type="submit" value="{% trans "Save" %}"/>
+</form>
+        </td>
+        <td>
+        	
+				{% if perms.salonservice.add_salonservice %}
+			
+			<a href="/salon/service/add/{{salon.id}}/">{% trans "Add New Service" %}</a>
+			
+			{% endif %}
+			<br/>
+			
+			{% if perms.salonservice.delete_salonservice %}
+			
+			<a href="/salon/service/delete/{{service.id}}/">{% trans "Delete This Service" %}</a>
+			
+			{% endif %}
+			
+			
+        </td>
+    </tr>
+</table>
+
+
+{% endif %}
+
+{% endblock %}

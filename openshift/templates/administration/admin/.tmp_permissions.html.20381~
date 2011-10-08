@@ -1,0 +1,69 @@
+{% extends "administration/index.html" %}
+  
+{% load i18n %} 
+{% block content %}
+<h1 style="text-align:center;">{% trans "User Permissions" %} </h1>
+<p></p>
+
+<table border="0">
+    <tr>
+        <td width="200">
+        	
+	    <div class="title">   
+		{% trans "Approved User" %}
+		   	</div>
+			
+			<p></p>
+		
+		{% for role in roles %}
+			<div class="display_role">
+			{{ role.name }}
+			<ul class="salon_list">
+				{% for salonAdmin in role.salonadmin_set.all %}
+    <li><a href="/administration/users/view/{{salonAdmin.id}}/">{{ salonAdmin.user.first_name }} {{ salonAdmin.user.last_name }}</a></li>
+{% endfor %}
+				
+			</ul>
+			</div>
+			
+{% endfor %}
+				
+			
+			
+		
+        </td>
+		
+        <td width="500">
+        	{% block user_detail %}
+			
+			
+			
+			{% endblock %}
+
+			
+        </td>
+		
+		 <td width="300">
+        	{% block menu_button %}
+			{% if perms.salonadmin.add_salonadmin %}
+			<a href="/administration/users/add/">{% trans "Add New Admin" %}</a>
+            {% endif %}
+			
+			
+			
+			{% endblock %}
+
+			
+        </td>
+		
+    </tr>
+   
+</table>
+
+			
+			
+		
+
+
+
+{% endblock %}

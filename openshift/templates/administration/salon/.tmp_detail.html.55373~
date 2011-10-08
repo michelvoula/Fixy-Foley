@@ -1,0 +1,113 @@
+{% extends "administration/salon/user_salons.html" %}
+{% load i18n %} 
+
+
+{% block page_title %}
+       <h1>Welcome to {{salon.str_name}} Salon</h1>
+		{% endblock %}
+{% block salon_detail %}
+
+
+
+<h2 class="claroToolTitle">Salon details </h2>
+<table  border="0">
+    <tr valign='top'>
+         <td class='tdright'>
+        	Salon Name:
+        </td>
+         <td class='tdleft'>
+         	{{salon.str_name}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Salon Owner:
+        </td>
+         <td class='tdleft'>
+         		{{salon.str_owner}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Description:
+        </td>
+         <td class='tdleft'>
+         	{{salon.str_description}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Specialities:
+        </td>
+         <td class='tdleft'>
+         	{{salon.str_specialities}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Adress Line 1:
+        </td>
+         <td class='tdleft'>
+         	{{salon.str_adress1}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Adress Line 2:
+        </td>
+         <td class='tdleft'>
+         	{{salon.str_adress2}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	City:
+        </td>
+         <td class='tdleft'>
+         	{{salon.city.str_name}}
+        </td>
+    </tr>
+	 <tr valign='top'>
+         <td class='tdright'>
+        	<p></p>
+        </td>
+         <td class='tdleft'>
+        	<p></p>
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Phone:
+        </td>
+         <td class='tdleft'>
+         	{{salon.str_phone}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Fax:
+        </td>
+         <td class='tdleft'>
+         	{{salon.str_fax}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Email:
+        </td>
+         <td class='tdleft'>
+         	{{salon.str_email}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Web:
+        </td>
+         <td class='tdleft'>
+         	<a href="{{salon.str_web_adress}}">{{salon.str_web_adress}}</a>
+        </td>
+    </tr>
+   
+</table>
+
+{% endblock %}

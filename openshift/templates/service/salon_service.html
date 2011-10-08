@@ -1,0 +1,46 @@
+{% extends "salon_admin.html" %}
+{% load i18n %} 
+{% block content %}
+<h1><a href="/salon/{{salon.id}}/">{{ salon.str_name }} Salon Services</a>  </h1>
+<p></p>
+
+<table border="0">
+    <tr>
+        <td>       	
+			
+			{% trans "Your Services" %}
+			<ul class="salon_list">
+				{% for salonservice in salon.salonservice_set.all %}
+    <li><a href="/salon/service/edit/{{salonservice.id}}/">{{ salonservice.service.str_name }}</a></li>
+{% endfor %}
+				
+			</ul>
+			
+		{% if perms.salonservice.add_salonservice %}
+			
+			<a href="/salon/service/add/{{salon.id}}/">{% trans "Add New Service" %}</a>
+			
+			{% endif %}
+        </td>
+		
+        <td >
+        	{% block service_detail %}
+			
+			
+			
+			{% endblock %}
+
+			
+        </td>
+		
+    </tr>
+   
+</table>
+
+			
+			
+		
+
+
+
+{% endblock %}

@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE|default:"en-us" }}" xml:lang="{{ LANGUAGE_CODE|default:"en-us" }}" {%  if LANGUAGE_BIDI %}dir="rtl"{%  endif %}>
+    <head>
+    	  <link href="/site_media/css/public.css" media="screen" rel="stylesheet" type="text/css"/>
+        <title>{% block title %}{% endblock %}</title>
+        {% block extrastyle %}{% endblock %}
+        {% block extrahead %}{% endblock %}
+        {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE" />
+        {% endblock %}
+    </head>
+    {% load i18n %}
+    <body class="">
+        <!-- Container -->
+        <div id="container">
+            <!-- Header -->
+            <div id="header">
+                <table border="0" class="fixy_tab_header">
+                    <tr>
+                        <td>
+                            <div class="fixy_logo">
+                                FIXY 
+                            </div>
+                        </td>
+                        {% if user.is_active%}
+                        <td>
+                            <span class="">{% trans "Welcome " %} : <strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</strong>.</span>
+                        </td>
+                        <td>
+                            {% url admin:logout as logout_url %}
+                            {% if logout_url %}<a href="{{ logout_url }}">
+                            {% else %}<a href="{{ root_path }}logout/">{% endif %}
+                                {% trans 'Log out' %}</a>
+                        </td>
+                        {% else %}
+                        <td>
+                        	<form action="/public/login/" method="post" id="login-form">{% csrf_token %}
+                            <span class="">{% trans "User name or Email" %} : </span>
+                            <input type="text" name="username" size="20"/>
+                       
+                            <span class="">{% trans "Password" %} : </span>
+                            <input type="password" name="password" size="20"/>
+                        
+                        
+                            <input type="checkbox" name="remember"/><span class="">{% trans "Remember Me" %} : </span>
+                       
+                        
+                            <button type="submit">
+                                {% trans "Log In" %}
+                            </button>
+							</form>
+                        </td>
+                        <td>
+                        <span class="">{% trans "Not Registered ?" %}</span>
+                        <a href="">{% trans "Register Here" %}</a>
+                        </button>
+                    </td>
+                    {% endif %}
+					<td>
+						
+						<br/>
+				<a href="">Like Us on Facebook</a>
+				<br/>
+				<a href="">Follow Us on TWITTER</a>
+					</td>
+                    </tr>
+			
+                </table>
+				
+            </div>
+            <!-- END Header -->
+            {% if messages %}
+            <ul class="messagelist">
+            {% for message in messages %}<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}<!-- Content -->
+        <div id="content" class="{% block coltype %}colM{% endblock %}">
+        
+		{{ state }}
+		
+		</div>
+        <!-- END Content -->
+        {% block footer %}
+        <div id="footer">
+        </div>{% endblock %}
+        </div>
+        <!-- END Container -->
+    </body>
+</html>

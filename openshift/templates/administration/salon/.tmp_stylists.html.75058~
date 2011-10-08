@@ -1,0 +1,27 @@
+{% extends "site_template.html" %}
+
+{% block content %}
+<center>
+<h1>Welcome to {{salon.str_name}} Salon</h1></center>
+
+<table width="100%" border="0">
+    <tr>
+        <td width='30%'>       	
+			Your Stylists
+			<ul>
+				{% for stylist in salon.stylist_set.all %}
+    <li><a href="/salon/stylist/view/{{stylist.id}}/">{{ stylist.str_first_name }} - {{ stylist.str_last_name }}</a></li>
+{% endfor %}
+				
+			</ul>
+			
+			<a href="/admin/salon/stylist/add/">Add A new Stylist</a>
+        </td>
+        <td width='70%'>
+        </td>
+    </tr>
+</table>
+
+
+
+{% endblock %}

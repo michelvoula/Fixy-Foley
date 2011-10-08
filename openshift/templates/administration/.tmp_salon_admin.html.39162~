@@ -1,0 +1,61 @@
+{% extends "administration/index.html" %}
+ {% load i18n %}
+ {% block menubar %}
+ {% endblock %}
+{% block leftsidebar %}
+ <div>
+        	<table width="200" border="0" cellspacing="5">
+        	<!--	<tr>
+        <td>
+        	<a href="/administration/salon/{{salon.id}}/">{% trans "Appointment Calendar" %}</a>
+        </td>
+    </tr>-->
+	 <tr>
+        <td>
+        	<a href="/administration/dashboard/">{% trans "Dashboard" %}</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        	<a href="/administration/salon/{{salon.id}}/">{% trans "Your Salon" %}</a>
+        </td>
+    </tr>
+    <tr>
+       
+    </tr>
+    <tr>
+        <td>
+        	
+        	<a href="/administration/salon/stylist/{{salon.id}}/">{% trans "Your Team" %}</a>
+        </td>
+       
+    </tr>
+	   <tr>
+        <td>
+        	
+        	<a href="/administration/salon/service/{{salon.id}}/">{% trans "Your Services" %}</a>
+        </td>
+       
+    </tr>
+	
+	   </tr>
+	   <tr>
+        <td>
+        	
+        	<a href="/administration/salon/stylist/{{salon.id}}/">{% trans "Reporting" %}</a>
+        </td>
+       
+    </tr>
+	
+	   </tr>
+	   <tr>
+        <td>
+        	
+        	<a href="/administration/users/">{% trans "Admins" %}</a>
+        </td>
+       
+    </tr>
+</table>
+
+        </div>
+{% endblock %}

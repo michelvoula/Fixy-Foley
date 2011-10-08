@@ -1,0 +1,74 @@
+{% extends "salon_admin.html" %}
+{% load i18n %} 
+{% block content %}
+<h1>Welcome  Salon Owner</h1>
+<p></p>
+
+<table border="0">
+    <tr>
+        <td width='40%'>       	
+			
+			{% trans "Your Salons" %}
+			<ul class="salon_list">
+				{% for salon in user.salon_set.all %}
+    <li><a href="/salon/{{salon.id}}/">{{ salon.str_name }}</a></li>
+{% endfor %}
+				
+			</ul>
+			
+			
+			{% if perms.salon.is_salon_owner %}
+			
+			<a href="/salon/add/">{% trans "Add New Salon" %}</a>
+			
+			{% endif %}
+        </td>
+        <td width='60%'>
+        	
+			{% block salon_detail %}
+			{% endblock %}
+
+			
+        </td>
+		<td>
+			{% block salon_photo %}
+			
+			<table border="0">
+    <tr>
+        <td>
+        	
+	
+        	<img src="/site_media/{{salon.img_photo}}" alt="Photo" width="200" height="200"/>
+			<br/>
+<form action="/salon/edit_photo/{{salon.id}}/" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+{{form.as_p}} 	
+<input type="submit" value="{% trans "Upload/Change Image" %}"/>
+</form>
+			
+			<center>
+		
+			<p><a href="/salon/edit/{{salon.id}}/">{% trans "Edit this Salon" %} </a></p>
+			<p><a href="/salon/service/{{salon.id}}/">{% trans "Salon Services" %} </a></p>
+			<p><a href=".">{% trans "Delete this Salon" %} </a></p>
+			
+			
+			</center>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+    </tr>
+</table>
+
+			{% endblock %}
+			
+			
+		</td>
+    </tr>
+</table>
+
+
+
+{% endblock %}

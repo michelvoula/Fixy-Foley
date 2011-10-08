@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>Add Album</title>
+        <link href="/site_media/js/jquery/css/ui-lightness/jquery-ui-1.8.11.custom.css" media="screen" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="/site_media/js/jquery/js/jquery-1.5.1.min.js">
+        </script>
+        <script type="text/javascript" src="/site_media/js/jquery/js/jquery-ui-1.8.11.custom.min.js">
+        </script>
+        <script src="{{ ADMIN_MEDIA_PREFIX }}js/admin/RelatedObjectLookups.js">
+        </script>
+        <script type="text/javascript" src="/site_media/controllers/posts.js">
+        </script>
+    </head>
+    <body>
+        <h1>Add Album</h1>
+        <div id="tabs1">
+            <ul>
+                <li>
+                    <a href="#content1">Photo</a>
+					
+                </li>
+				 <li>
+                    
+					<a href="#content2">Video</a>
+                </li>
+            </ul>
+            <div id="content1">
+                <form method="POST" action="/add_album/Photo">
+                    {% csrf_token %}
+                    <table border="0">
+                        {% for album in albums.all %}
+                        <tr>
+                            <td>
+                                {{ album.str_name }} 
+                            </td>
+                            <td>
+                                {{ album.str_description }} 
+                            </td>
+                            <td>
+                                <input type="radio" name="albumToAdd" value="{{ album.id }}" />
+								
+                            </td>
+                        </tr>{% endfor %}
+                        
+                    </table>
+                    <p>
+                        <input type="submit" />| <a href="javascript:window.close()">Cancel</a>
+                    </p>
+                </form>
+            </div>
+        
+		
+		        <div id="content2">
+                <form method="POST" action="/add_album/Video">
+                    {% csrf_token %}
+                    <table border="0">
+                        {% for album in videos.all %}
+                        <tr>
+                            <td>
+                                {{ album.str_name }} 
+                            </td>
+                            <td>
+                                {{ album.str_description }} 
+                            </td>
+                            <td>
+                                <input type="radio" name="albumToAdd" value="{{ album.id }}" />
+								
+                            </td>
+                        </tr>{% endfor %}
+                        
+                    </table>
+                    <p>
+                        <input type="submit" />| <a href="javascript:window.close()">Cancel</a>
+                    </p>
+                </form>
+            </div>
+		
+		</div>
+        <script type="text/javascript">
+            //jquery maggic tabs script
+            var target = jQuery('div#tabs1');
+            target.tabs({
+                event: 'click'
+            });
+        </script>
+    </body>
+</html>

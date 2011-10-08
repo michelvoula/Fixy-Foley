@@ -1,0 +1,28 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %} 
+{% block extrastyle %}
+<link href="/site_media/js/jquery/css/ui-lightness/jquery-ui-1.8.11.custom.css" media="screen" rel="stylesheet" type="text/css"/>
+{{ block.super }}
+{% endblock %}
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="/site_media/js/jquery/js/jquery-1.5.1.min.js">
+</script>
+<script type="text/javascript" src="/site_media/js/jquery/js/jquery-ui-1.8.11.custom.min.js">
+</script>
+<script type="text/javascript" src="/site_media/js/jquery/jquery.form.js">
+</script>
+<script type="text/javascript" src="/site_media/js/tiny_mce/tiny_mce.js">
+</script>
+<script type="text/javascript" src="/site_media/textareas.js">
+</script>
+<script type="text/javascript" src="/site_media/controllers/posts.js">
+</script>
+{% endblock %}
+{% block form_top %}
+<p>
+	
+	{%trans "Entrer tous les champs requis...(En gras)" %}
+
+    
+</p>
+{% endblock %}

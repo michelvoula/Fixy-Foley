@@ -1,0 +1,125 @@
+{% extends "administration/stylist/salon_team.html" %}
+{% load i18n admin_modify adminmedia %}
+{% block extrastyle %}
+{{ block.super }}
+<link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+{% endblock %} 
+{% load i18n %} 
+{% block stylist_detail %}
+{% if stylist %}<h1>{% trans "Stylist:" %} {{stylist.str_first_name}} </h1>
+
+<table border="0">
+    <tr>
+        <td>
+            
+                <table>
+                    <tr>
+                        <td>
+                            {% trans "First Name" %}
+                        </td>
+                        <td>
+                            {{stylist.str_first_name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans "Last Name" %}
+                        </td>
+                        <td>
+                            {{stylist.str_last_name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {% trans "Job Title" %}
+                        </th>
+                        <td>
+                            {{stylist.jobTitle}}
+                          </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {% trans "Description" %}
+                        </th>
+                        <td>
+                            {{stylist.str_description}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans "Services this stylist can be booked for" %}
+                        </td>
+                        <td>
+                            <ul class="list-style-none">
+                                {% for salonservice in stylist.services.all%}
+                                <li style="list-style:none">
+                                    {{ salonservice.service.str_name }}
+                                </li>{% endfor %}
+                            </ul>
+                  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan=2>
+                            {% trans "Stylist discount" %}
+                            <br/>
+                           
+                                {% if discount_type.type == 1 %}                                
+                                {% trans "Always discount at" %} :{{discount_type.static_discount}}
+								{% endif %}
+                                
+									{%if discount_type.type == 2 %}                                
+                                
+								
+                                    <table border="0">
+                                        <tr>
+                                            <td>
+                                                <label for="id_start_discount">
+                                                    {% trans "Start" %}:
+                                                </label>
+                                            </td>
+                                            <td>
+                                         
+                                                {{discount_type.start_discount}}%
+              
+                                            </td>
+                                            <td>
+                                                
+                                                {{discount_type.nb_days}}  {% trans "Days" %}:
+                                            </td>
+                                            <td>
+                                                {{discount_type.nb_months}}  {% trans "Months" %}:
+                                               
+                                            </td>
+                                            <td>
+                                                {% trans "Before Appointment day" %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                {% trans "End" %}
+                                            </td>
+                                            <td>
+                                                {{discount_type.end_discount}}%
+                                            </td>
+                                            <td>
+                                                {% trans "On the day before and day of appointment" %}
+                                            </td>
+                                        </tr>
+                                    </table>
+									{% endif %}
+									
+									{% if discount_type.type == 3 %}                                
+                               {% trans "Option 3: Never discount" %}
+								{% endif %}
+                            
+                        </td>
+                    </tr>
+                </table>
+             
+        </td>
+      
+    </tr>
+</table>
+{% endif %}
+{% endblock %}

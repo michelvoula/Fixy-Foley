@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>Album Photo</title>
+
+<link href="/site_media/js/jquery/css/ui-lightness/jquery-ui-1.8.11.custom.css" media="screen" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+#imgViewer {
+	
+	width:400px;
+	border-right: 1px dashed #DFE1E0;
+}	
+#imgList {
+	
+	width:200px;	
+	border-right: 1px dashed #DFE1E0;
+	border-left: 1px dashed #DFE1E0;
+}
+
+#imgList ul li{
+
+list-style-type: none;
+}
+	
+	
+</style>
+<script type="text/javascript" src="/site_media/js/jquery/js/jquery-1.5.1.min.js">
+</script>
+<script type="text/javascript" src="/site_media/js/jquery/js/jquery-ui-1.8.11.custom.min.js">
+</script>
+<script type="text/javascript">
+	
+	show=function(id)
+	{
+		
+		var name=$("#phto_small_name_"+id+"").html();
+		var desc=$("#phto_small_desc_"+id+"").html();
+		var src=$("#src_"+id+"").attr("src");
+		
+		$("#id_current_name").html(name);
+		$("#id_current_desc").html(desc);
+		$("#imgcurrent").attr("src",src);
+		
+		
+	}
+	
+	
+</script>
+</head>
+<body>
+	<h1>Album {{ album.str_name }}</h1>
+<table class="Album Viewer">
+<td id="imgViewer">
+	<table width="400" border="0">
+    <tr>
+        <td>
+        	<span id="id_current_name" class="album_current_name"></span> 
+        </td>
+    </tr>
+    <tr>
+        <td>
+        	<img src="" width="400" height="400" id="imgcurrent"/></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        	<span id="id_current_desc" class="album_current_desc"></span> 
+        </td>
+    </tr>
+</table>
+
+<td id="imgList" width="200">
+	<ul>
+	
+	{% for photo in album.medias.all %}
+                    
+                    	<li>
+                    		<span id="span{{ photo.id }} ">
+                    		<a href="javascript:show('{{ photo.id }}')" onmouseover="show('{{ photo.id }}')"><img src="/site_media/{{ photo.str_file }}" id="src_{{ photo.id }}" alt="{{ photo.str_description }} " width="50" height="50" class="phto_album_small"/></a>
+							</span><br>
+							<span class="phto_small_name" id="phto_small_name_{{ photo.id }}">{{ photo.str_name }} </span>
+							<span class="invisible" id="phto_small_desc_{{ photo.id }}" style="display:none;">{{ photo.str_description }} </span>
+                    	</li>
+						
+					{% endfor %}
+	</ul>
+</td>
+</table>
+</body>
