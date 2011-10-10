@@ -1,0 +1,57 @@
+{% extends "salon_admin.html" %}
+{% load i18n %} 
+{% block content %}
+<h1>Welcome to {{salon.str_name}} Salon</h1>
+<h1>----</h1>
+
+<table border="0">
+    <tr>
+        <td width='40%'>       	
+			
+			{% trans "Your Salons" %}
+			<ul class="salon_list">
+				{% for salon in user.salon_set.all %}
+    <li><a href="/salon/{{salon.id}}/">{{ salon.str_name }}</a></li>
+{% endfor %}
+				
+			</ul>
+			
+			<a href="/salon/stylist/add/{{salon.id}}">{% trans "Add New Salon" %}</a>
+        </td>
+        <td width='60%'>
+        	
+			{% block salon_detail %}
+			{% endblock %}
+
+			
+        </td>
+		<td>
+			
+			<table border="0">
+    <tr>
+        <td>
+        	<img src="/site_media/{{salon.img_photo}}" alt="Photo" width="200" height="200"/>
+			<br/>
+			<center>
+				<p><a href="" >{% trans "Upload/Change Image" %}</a></p>
+			<p><a href="">{% trans "Edit this Salon" %} </a></p>
+			<p><a href="">{% trans "Delete this Salon" %} </a></p>
+			</center>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+    </tr>
+</table>
+
+			
+			
+			
+		</td>
+    </tr>
+</table>
+
+
+
+{% endblock %}

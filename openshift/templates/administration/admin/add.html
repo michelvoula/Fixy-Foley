@@ -1,0 +1,121 @@
+{% extends "administration/admin/permissions.html" %}
+{% load i18n admin_modify adminmedia %}
+{% block extrastyle %}
+{{ block.super }}
+<link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+{% endblock %} 
+{% load i18n %} 
+{% block user_detail %}<h1>{% trans "Add Salon Admin" %} </h1>
+<p>
+    {% if errors %}
+    <p class="errornote">
+        {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+    {% endif %}
+</p>
+<table border="0">
+    <tr>
+        <td>
+            <form action="/administration/users/add/" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>
+                        {% trans "User Infos" %}:
+                    </legend>
+                    <table>
+                        {{ user_form }}
+                    </table>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        {% trans "Salon and Role" %}:
+                    </legend>
+                    <table>
+                        {{ admin_user_form }}
+                    </table>
+                </fieldset>
+                <table border="0">
+                    <tr>
+                        <td>
+                        <fieldset>
+                            <legend>
+                                {% trans "Appointment Calendar" %}:
+                            </legend>
+                            <ul>
+                                <li>
+                                    <input type="radio" name="appointment_priv" value="1" checked/>no permission
+                                </li>
+                                <li>
+                                    <input type="radio" name="appointment_priv" value="2"/>view only
+                                </li>
+                                <li>
+                                    <input type="radio" name="appointment_priv" value="3"/>view and edit
+                                </li>
+                            </ul>
+                        </fieldset>
+                        <td>
+                            <fieldset>
+                                <legend>
+                                    {% trans "Salon profile" %}:
+                                </legend>
+                                <ul>
+                                    <li>
+                                        <input type="radio" name="salon_priv" value="1" checked/>no permission
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="salon_priv" value="2"/>view only
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="salon_priv" value="3"/>view and edit
+                                    </li>
+                                </ul>
+                            </fieldset>
+                        </td>
+						 </tr>
+						 <tr>
+                        <td>
+                            <fieldset>
+                                <legend>
+                                    {% trans "Services" %}:
+                                </legend>
+                                <ul>
+                                    <li>
+                                        <input type="radio" name="service_priv" value="1" checked=true/>no permission
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="service_priv" value="2"/>view only
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="service_priv" value="3"/>view and edit
+                                    </li>
+                                </ul>
+                            </fieldset>
+                        </td>
+                        <td>
+                        <fieldset>
+                        <legend>
+                            {% trans "Report" %}:
+                        </legend>
+                        <ul>
+                            <li>
+                                <input type="radio" name="report_priv" value="1" checked=true/>no permission
+                            </li>
+                            <li>
+                                <input type="radio" name="report_priv" value="2"/>view only
+                            </li>
+                            <li>
+                                <input type="radio" name="report_priv" value="3"/>view and edit
+                            </li>
+                        </ul>
+                        </td>
+                    </tr>
+                </table>
+                </fieldset><input type="submit" value="{% trans "Save" %}"/>
+            </form>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+{% endblock %}

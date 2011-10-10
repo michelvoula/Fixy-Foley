@@ -1,0 +1,123 @@
+{% extends "administration/stylist/salon_team.html" %}
+ {% load i18n admin_modify adminmedia %}
+   {% block extrastyle %}
+   {{ block.super }}
+      
+       <link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+     
+  {% endblock %}
+{% load i18n %} 
+{% block stylist_detail %}
+	{% if stylist %}
+<h1>{% trans "Edit stylist" %} {{stylist.str_first_name}} </h1>
+<p>
+	{% if errors %}
+    <p class="errornote">
+    {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+{% endif %}
+</p>
+<table  border="0">
+    <tr>
+        <td>
+        	<form action="/administration/salon/stylist/edit/{{stylist.id}}/" method="post">
+	{% csrf_token %}
+	
+	
+	<table>
+		
+		<tr>
+			
+			<td>{{form.str_first_name.label_tag}}:</td>
+			<td>{{form.str_first_name}}</td>
+						
+		</tr>
+		<tr>
+			
+			<td>{{form.str_last_name.label_tag}}:</td>
+			<td>{{form.str_last_name}}</td>
+						
+		</tr>
+		
+		
+		<tr>
+			
+			<th>{{form.jobTitle.label_tag}}</th>
+			
+			  <td>
+			   {{form.jobTitle}}
+			    <br/>
+			    <a href="javascript:void()" onclick="showPopup('/salon/addjob/id_jobTitle/',100,200);">{% trans "request new Job Title" %}	</a>
+		
+			   </td>
+		</tr>
+			  
+			  
+	    	<tr>
+			<td>{{form.discount_tier.label_tag}}			
+			</td>
+			<td> {{form.discount_tier}}</td>
+						
+		</tr>
+		
+		<tr>
+			
+			<th>{{form.str_description.label_tag}}:</th>
+			<td>{{form.str_description}}</td>
+						
+		</tr>
+		
+		<tr>
+			
+			<th>{{form.str_specialities.label_tag}}:</th>
+			<td>{{form.str_specialities}}</td>
+						
+		</tr>
+		
+	
+  
+
+</table>
+<input type="submit" value="{% trans "Save" %}"/>
+</form>
+        </td>
+        <td>
+        	
+			
+        	<img src="/site_media/{{stylist.img_photo}}" alt="Photo" width="200" height="200"/>
+			<br/>
+<form action="/administration/salon/stylist/edit_photo/{{stylist.id}}/" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+{{form_photo.as_p}} 	
+<input type="submit" value="{% trans "Upload/Change Image" %}"/>
+</form>
+        	
+				{% if perms.salonstylist.add_salonstylist %}
+			
+			<a href="/administration/salon/stylist/add/{{salon.id}}/">{% trans "Add New Team Member" %}</a>
+			
+			{% endif %}
+			<br/>
+				{% if perms.salonstylist.add_salonstylist %}
+			
+			<a href="/administration/salon/stylist/add/{{salon.id}}/">{% trans "Save this Team Member" %}</a>
+			
+			{% endif %}
+			<br/>
+			
+			{% if perms.salonstylist.delete_salonstylist %}
+			
+			<a href="/administration/salon/stylist/delete/{{stylist.id}}/">{% trans "Delete This Team member" %}</a>
+			
+			{% endif %}
+			
+			
+        </td>
+    </tr>
+</table>
+
+
+{% endif %}
+
+{% endblock %}

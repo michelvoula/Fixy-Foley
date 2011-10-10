@@ -1,0 +1,121 @@
+{% extends "administration/admin/permissions.html" %}
+{% load i18n admin_modify adminmedia %}
+{% block extrastyle %}
+{{ block.super }}
+<link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+{% endblock %} 
+{% load i18n %} 
+{% block user_detail %}<h1>{% trans "Edit Salon Admin" %}  {{ admin_user.user.firstname }}</h1>
+<p>
+    {% if errors %}
+    <p class="errornote">
+        {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+    {% endif %}
+</p>
+<table border="0">
+    <tr>
+        <td>
+            <form action="/administration/users/edit/{{ admin_user.id }}/" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>
+                        {% trans "User Infos" %}:
+                    </legend>
+                    <table>
+                        {{ user_form }}
+                    </table>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        {% trans "Salon and Role" %}:
+                    </legend>
+                    <table>
+                        {{ admin_user_form }}
+                    </table>
+                </fieldset>
+                <table border="0">
+                    <tr>
+                        <td>
+                        <fieldset>
+                            <legend>
+                                {% trans "Appointment Calendar" %}:
+                            </legend>
+                            <ul>
+                                <li>
+                                    <input type="radio" name="appointment_priv" value="1" {% if appointment_priv != 2 and appointment_priv != 3  %}checked{% endif %}/>no permission
+                                </li>
+                                <li>
+                                    <input type="radio" name="appointment_priv" value="2" {% if appointment_priv == 2 %}checked{% endif %}/>view only
+                                </li>
+                                <li>
+                                    <input type="radio" name="appointment_priv" value="3" {% if appointment_priv == 2 %}checked{% endif %}/>view and edit
+                                </li>
+                            </ul>
+                        </fieldset>
+                        <td>
+                            <fieldset>
+                                <legend>
+                                    {% trans "Salon profile" %}:
+                                </legend>
+                                <ul>
+                                    <li>
+                                        <input type="radio" name="salon_priv" value="1" {% if salon_priv != 2 and salon_priv != 3  %} checked {% endif %}/>no permission
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="salon_priv" value="2" {% if salon_priv == 2 %}checked{% endif %}/>view only
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="salon_priv" value="3" {% if salon_priv == 3 %}checked{% endif %}/>view and edit
+                                    </li>
+                                </ul>
+                            </fieldset>
+                        </td>
+						 </tr>
+						 <tr>
+                        <td>
+                            <fieldset>
+                                <legend>
+                                    {% trans "Services" %}:
+                                </legend>
+                                <ul>
+                                    <li>
+                                        <input type="radio" name="service_priv" value="1" {% if service_priv != 2 and service_priv != 3  %}checked{% endif %} />no permission
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="service_priv" value="2" {% if service_priv == 2 %}checked{% endif %}/>view only
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="service_priv" value="3" {% if service_priv == 3 %}checked{% endif %}/>view and edit
+                                    </li>
+                                </ul>
+                            </fieldset>
+                        </td>
+                        <td>
+                        <fieldset>
+                        <legend>
+                            {% trans "Report" %}:
+                        </legend>
+                        <ul>
+                            <li>
+                                <input type="radio" name="report_priv" value="1" {% if report_priv != 2 and report_priv != 3  %}checked{% endif %}/>no permission
+                            </li>
+                            <li>
+                                <input type="radio" name="report_priv" value="2" {% if report_priv == 2 %}checked{% endif %}/>view only
+                            </li>
+                            <li>
+                                <input type="radio" name="report_priv" value="3" {% if report_priv == 3 %}checked{% endif %}/>view and edit
+                            </li>
+                        </ul>
+                        </td>
+                    </tr>
+                </table>
+                </fieldset><input type="submit" value="{% trans "Save" %}"/>
+            </form>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+{% endblock %}

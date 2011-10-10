@@ -1,0 +1,57 @@
+{% extends "administration/salon_admin.html" %}
+{% load i18n %} 
+{% block content %}
+<div class="page_title">
+    <center>
+        {% block page_title %}<h1><a href="/administration/salon/{{salon.id}}/">{{ salon.str_name }}</a> Salon Team </h1>
+        {% endblock %}
+    </center>
+</div>
+<table border="0">
+    <tr>
+         <td width='200' class="admin_list_td">
+            <div class="admin_list_title">
+                {% trans "Your Team" %}
+            </div>
+            <ul class="admin_list">
+                {% for stylist in salon.stylist_set.all %}
+                <li>
+                    <a href="/administration/salon/stylist/view/{{stylist.id}}/">{{ stylist.str_first_name }} {{ stylist.str_last_name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if perms.salon.add_salonstylist%}<a href="/administration/salon/stylist/add/{{salon.id}}/">{% trans "Add New Stylist" %}</a>
+            {% endif %}
+        </td>
+         <td width='400' class="admin_detail_td">
+            {% block stylist_detail %}
+            {% endblock %}
+        </td>
+		<td class="admin_photo_menu_td" width="200">
+			 {% block admin_photo %}
+			<img src="/site_media/{{stylist.img_photo}}" alt="Photo" width="200" height="200"/>
+            <br/>
+            <br/>
+                        <form action="/administration/salon/stylist/edit_photo/{{stylist.id}}/" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %} 
+                            {{photo_form.as_p}} <input type="submit" value="{% trans "Upload/Change Image" %}"/>
+                        </form>
+			{% endblock %}
+			 {% block admin_menu %}
+           
+            {% if perms.salonstylist.add_salonstylist %}
+			<br/> 
+			<a class="edit_btn" href="/administration/salon/stylist/edit/{{stylist.id}}/">{% trans "Edit this Team Member" %}</a>
+            {% endif %}
+            <br/>
+			<br/>
+            {% if perms.salonstylist.delete_salonstylist %}
+			<a class="delete_btn" href="/administration/salon/stylist/delete/{{stylist.id}}/">{% trans "Delete This Team member" %}</a>
+            {% endif %}
+			
+			 {% endblock %}
+			
+		</td>
+    </tr>
+</table>
+{% endblock %}

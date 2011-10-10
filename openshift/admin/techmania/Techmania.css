@@ -1,0 +1,108 @@
+
+ #header-tabs {
+	/*position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;*/
+	height: 25px;
+	background: #F3F7FA;
+	font: bold 1.1em Verdana, Tahoma, 'Trebuchet MS', Sans-serif;
+}
+
+#header-tabs ul {
+	margin: 0;
+	padding: 2px 0px 0px 7px;
+	list-style: none;
+}
+
+#header-tabs li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+#header-tabs a {
+	float: left;
+	margin: 0;
+	padding: 5px 0 10px 20px;
+	text-decoration: none;
+	color: #8CC63F;
+	display: block;
+}
+
+#header-tabs a span {
+	float: left;
+	display: block;
+	padding: 7px 15px 4px 8px;
+	color: #8CC63F;
+	font-family: 'Trebuchet MS', 'Lucida Grande', Arial, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 1;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	text-transform: uppercase;
+}
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#header-tabs a span {
+	float: none;
+}
+
+/* End IE5-Mac hack */
+#header-tabs a:hover span {
+	color: black;
+}
+
+#header-tabs a:hover {
+	background-position: 0% -42px;
+}
+
+.current a:hover span {
+	background-position: 100% -42px !important;
+}
+
+.current a {
+	background-position: 0% -42px !important;
+}
+
+.current  a span {
+	background-position: 100% -42px !important;
+	color: #FFF;
+}
+
+.invisible {
+	display: none;
+}
+
+/* alignment classes */
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-right {
+	text-align: right;
+}
+
+/* additional classes */
+.clear {
+	clear: both;
+}
+
+.hide {
+	display: none;
+}
+
+.gray {
+	color: black;
+}
+

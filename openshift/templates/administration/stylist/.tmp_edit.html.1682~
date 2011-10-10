@@ -1,0 +1,235 @@
+{% extends "administration/stylist/salon_team.html" %}
+{% load i18n admin_modify adminmedia %}
+{% block extrastyle %}
+{{ block.super }}
+<link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+{% endblock %} 
+{% load i18n %} 
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript">
+    
+    function getSelectedVals(name, value){
+        var tmp = [];
+        $("input[name='" + name + "']").each(function(){
+            if ($(this).attr('checked')) {
+                checked = ($(this).val());
+                tmp.push(checked);
+            }
+        });
+        var filters = tmp.join(',');
+        $('#' + value).val(filters);
+        //alert(filters)
+        return filters;
+    }
+    
+    function discount(option){
+    
+        switch (option) {
+            case 1:
+                $("#id_discount-static_discount").attr('disabled', false);
+                $("#id_discount-static_discount").attr('value', 0);
+                $("#id_discount-start_discount").attr('disabled', true);
+                $("#id_discount-start_discount").attr('value', 0);
+                $("#id_discount-end_discount").attr('disabled', true);
+                $("#id_discount-end_discount").attr('value', 0);
+                $("#id_discount-nb_months").attr('disabled', true);
+                $("#id_discount-nb_months").attr('value', 0);
+                $("#id_discount-nb_months").attr('disabled', true);
+                $("#id_discount-nb_months").attr('value', 0);
+                $("#id_discount-nb_days").attr('disabled', true);
+                $("#id_discount-nb_days").attr('value', 0);
+                $("#id_discount-end_discount").attr('disabled', true);
+                $("#id_discount-end_discount").attr('value', 0);
+                
+                break;
+                
+            case 2:
+                $("#id_discount-static_discount").attr('disabled', true);
+                $("#id_discount-static_discount").attr('value', 0);
+                $("#id_discount-start_discount").attr('disabled', false);
+                $("#id_discount-start_discount").attr('value', 0);
+                $("#id_discount-end_discount").attr('disabled', false);
+                $("#id_discount-end_discount").attr('value', 0);
+                $("#id_discount-nb_months").attr('disabled', false);
+                $("#id_discount-nb_months").attr('value', 0);
+                $("#id_discount-nb_months").attr('disabled', false);
+                $("#id_discount-nb_months").attr('value', 0);
+                $("#id_discount-nb_days").attr('disabled', false);
+                $("#id_discount-nb_days").attr('value', 0);
+                $("#id_discount-end_discount").attr('disabled', false);
+                $("#id_discount-end_discount").attr('value', 0);
+                break;
+                
+            case 3:
+                //document.getElementById("id_dicount-static_discount").disabled=true
+                $("#id_discount-static_discount").attr('disabled', true);
+                $("#id_static_discount").attr('value', 0);
+                $("#id_discount-start_discount").attr('disabled', true);
+                $("#id_discount-start_discount").attr('value', 0);
+                $("#id_discount-end_discount").attr('disabled', true);
+                $("#id_discount-end_discount").attr('value', 0);
+                $("#id_discount-nb_months").attr('disabled', true);
+                $("#id_discount-nb_months").attr('value', 0);
+                $("#id_discount-nb_days").attr('disabled', true);
+                $("#id_discount-nb_days").attr('value', 0);
+				$("#id_discount-end_discount").attr('disabled', true);
+                $("#id_discount-end_discount").attr('value', 0);
+                break;
+        }
+    }
+</script>
+{% endblock %} 
+{% block stylist_detail %}
+{% if stylist %}<h1>{% trans "Edit stylist" %} {{stylist.str_first_name}} </h1>
+<p>
+    {% if errors %}
+    <p class="errornote">
+        {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+    {% endif %}
+</p>
+<table border="0">
+    <tr>
+        <td>
+            <form action="/administration/salon/stylist/edit/{{stylist.id}}/" method="post">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>
+                            {{form.str_first_name.label_tag}}:
+                        </td>
+                        <td>
+                            {{form.str_first_name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{form.str_last_name.label_tag}}:
+                        </td>
+                        <td>
+                            {{form.str_last_name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{form.jobTitle.label_tag}}
+                        </th>
+                        <td>
+                            {{form.jobTitle}}
+                            <br/>
+                            <a href="javascript:void()" onclick="showPopup('/administration/salon/addjob/id_jobTitle/',200,100);">{% trans "request new Job Title" %} </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{form.str_description.label_tag}}:
+                        </th>
+                        <td>
+                            {{form.str_description}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% trans "Services this stylist can be booked for" %}
+                        </td>
+                        <td>
+                            <ul class="list-style-none">
+                                {% for salonservice in salon.salonservice_set.all%}
+                                <li style="list-style:none">
+                                    {{ salonservice.service.str_name }}<input type="checkbox" name="services" value="{{ salonservice.id }}" id="chk{{salonservice.id}}" onchange="getSelectedVals('services','serviceList')"/>
+                                </li>{% endfor %}
+                            </ul><input type="hidden" name="serviceList" id="serviceList"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan=2>
+                            {% trans "Stylist discount" %}
+                            <br/>
+                            {{discount_type_form.type.errors}}
+                            <br/>
+                            <ul>
+                                <li style="list-style:none">
+                                <input type="radio" name="discount-type" id="id_discount-type" value="1" onclick="discount(1)"/>{% trans "Option 1: Set Level Discount" %}
+                                <br/>
+                                {% trans "Always discount at" %} {{discount_type_form.static_discount}}
+                                <li style="list-style:none">
+                                    <input type="radio" name="discount-type" id="id_discount-type" value="2" onclick="discount(2)"/>{% trans "Option 2: Dutch Auction" %}
+                                    <br/>
+                                    <table border="0">
+                                        <tr>
+                                            <td>
+                                                <label for="id_discount-start_discount">
+                                                    {% trans "Start" %}:
+                                                </label>
+                                            </td>
+                                            <td>
+                                                {{discount_type_form.start_discount.errors}}
+                                                {{discount_type_form.start_discount}}%
+                                                <br/>
+                                                {{discount_type_form.start_discount.errors}}
+                                            </td>
+                                            <td>
+                                                {{discount_type_form.nb_days.errors}}
+                                                {{discount_type_form.nb_days}}<!-- <select name="number_days">
+                                                <option value="0"></option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                </select>-->{% trans "Days" %}
+                                                <br/>
+                                                {{discount_type_form.nb_days.errors}}
+                                            </td>
+                                            <td>
+                                                {{discount_type_form.nb_months}}<!-- <select name="number_months">
+                                                <option value="0"></option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                </select>-->{% trans "Months" %}
+                                                <br/>
+                                                {{discount_type_form.nb_months.errors}}
+                                            </td>
+                                            <td>
+                                                {% trans "Before Appointment day" %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                {% trans "End" %}
+                                            </td>
+                                            <td>
+                                                {{discount_type_form.end_discount}}%
+                                            </td>
+                                            <td colspan="3">
+                                                {% trans "On the day before and day of appointment" %}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </li>
+                                <li style="list-style:none">
+                                    <input type="radio" name="type" id="id_discount-type" value="3" onclick="discount(3)"/>{% trans "Option 3: Never discount" %}
+                                    <br/>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" value="{% trans "Save" %}"/>
+            </form>
+        </td>
+              
+    </tr>
+</table>
+{% endif %}
+{% endblock %}
+{% block admin_menu %}
+           {% if perms.salonstylist.add_salonstylist %}
+		   <a href="/administration/salon/stylist/add/{{salon.id}}/">{% trans "Add New Team Member" %}</a>
+            {% endif %}
+            <br/>            
+            <br/>
+            {% if perms.salonstylist.delete_salonstylist %}
+			<a href="/administration/salon/stylist/delete/{{stylist.id}}/">{% trans "Delete This Team member" %}</a>
+           {% endif %}
+{% endblock %}
+

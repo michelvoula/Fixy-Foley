@@ -1,0 +1,191 @@
+
+.wLabel {
+	color: #555555 !important;
+	font-family: Trebuchet MS, verdana, Georgia !important;
+	width: 200px;
+	text-align: left;
+	vertical-align: top;
+	padding: 0px 0px 0px 25px;
+}
+
+#tabViewCV td
+{
+padding: 20px 0px 0px 0px;	
+}
+.wInput {
+	vertical-align: top;
+}
+
+.lblDescription {
+	font-style: italic !important;
+	font-size: 12px !important;
+}
+
+.saveBouton {
+	background-image: url("images/save.gif");
+	width: 80px;
+	height: 31px;
+	border: none;
+}
+
+.searchButton {
+	background-image: url("images/search.gif");
+	width: 80px;
+	height: 31px;
+	border: none;
+
+}
+
+.popUpwindow {
+	color: #555555 !important;
+	font-family: Trebuchet MS, verdana, Georgia !important;
+	font-size: 15px !important;
+}
+
+h2.widgettitle {
+	background-color: #F3F7FA;
+	border-top: 2px solid #CFE4F2;
+	font-family: 'Lucida Grande', Sans-Serif;
+	font-size: 1.2em;
+	padding: 4px 0 4px 10px;
+	color: #555555 !important;
+}
+
+.tabSearchBar {
+	width: 100%;
+	background-color: #F3F7FA;
+	color: #555555 !important;
+}
+
+.tabSearchBar td {
+	padding: 0px 5px 0px 0px;
+}
+
+#popMessage {
+	color: #555555 !important;
+	font-family: 'Trebuchet MS', 'verdana', 'Georgia' !important;
+	font-size: 20px !important;
+}
+
+.cbutton {
+	border: none;
+	background: none;
+}
+
+.uibutton {
+	width: 84px;
+	border: 1px solid #999;
+	background-image: url(images/bg-button-grad.gif);
+	background-repeat: repeat-x;
+	background-position: left top;
+	background-color: #bbb;
+	color: #000 !important;
+	padding: 2px 8px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	text-shadow: white 0px 1px 0px;
+	margin: auto 6px auto 6px;
+	outline: none;
+	overflow: visible;
+	font-size: 14px!important;
+	font-family: Trebuchet MS, verdana, Georgia !important;
+}
+
+
+
+#waiting_message {
+	text-align: center;
+}
+
+.invalid_text {
+	background-color: red!important;;
+}
+/*
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+.required
+{
+    color: red!important;
+}
+#ulcours li
+{
+    list-style-type: none;
+}
+.claroDialogBoxInfo div
+{
+   background: none repeat scroll 0 0 #F9F7ED!important;
+    border-color: #CCCCCC!important;
+    border-style: solid!important;
+    border-width: 1px 1px 1px 5px!important;
+    margin-bottom: 15px!important;
+    margin-top: 10px!important;
+    padding: 5px 85px 5px 20px!important;
+}
+.elmenu tr td
+{
+   text-align: center;
+}
+.claroBlockHeader {
+    color: #5C5C5C;
+    font-weight: bold;
+    padding: 2px 5px 2px 5px;
+    margin: 0;
+    background-color: #C5D4E2;
+    border-bottom: 1px #96BB7A solid;
+}
+
+a
+{
+    color: blue;
+
+}
+a:visited
+{
+        color: blue;
+
+}
+
+
+
+.class_pair td
+{
+    background-color: #DFDFDF!important;
+}
+.class_impair td
+{
+  background-color: bisque!important;
+}
+.post .meta b {
+	display: none;
+}
+
+
+.invisible {
+	display: none;
+}
+
+#logindiv
+{
+    padding: 0px 0 0 0px;
+}
+
+#urllogout
+{
+    padding: 0px 0px 0px 0px;
+}
+
+.tdleft
+{
+	text-align: left;
+	padding-left: 25px;
+	
+}
+
+.tdright
+{
+	text-align: right;
+	font-weight: bold;
+	
+}

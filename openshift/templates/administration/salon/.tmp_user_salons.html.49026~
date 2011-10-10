@@ -1,0 +1,57 @@
+{% extends "administration/salon_admin.html" %} 
+{% load i18n %} 
+{% block content %}
+
+
+
+<table border="0">
+    <tr>
+    	<div class="page_title">{% trans "Salon Details" %}</div>
+        <td width='200' class="admin_list_td">
+            <div class="admin_list_title">
+                {% trans "Your Salons" %}
+            </div>
+            <ul class="admin_list">
+                {% for salon in user.salon_set.all %}
+                <li>
+                    <a href="/administration/salon/{{salon.id}}/">{{ salon.str_name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if perms.salon.is_salon_owner %}<a href="/administration/salon/add/" class="btn_add">{% trans "Add New Salon" %}</a>
+            {% endif %}
+        </td>
+        <td width='400' class="admin_detail_td">
+            <div class="admin_detail">
+                {% block salon_detail %}
+                {% endblock %}
+            </div>
+        </td>
+		
+        <td class="admin_photo_menu_td" width="200">
+           
+           
+                    	 {% block salon_photo %}
+                        <img src="/site_media/{{salon.img_photo}}" alt="Photo" width="200" height="200"/>
+                        <br/>
+                        <form action="/administration/salon/edit_photo/{{salon.id}}/" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %} 
+                            {{form.as_p}} <input type="submit" value="{% trans "Upload/Change Image" %}"/>
+                        </form>
+						 {% endblock %}
+						  {% block salon_menu %}
+                        <center>
+                            <p>
+                                <a class="edit_btn" href="/administration/salon/edit/{{salon.id}}/">{% trans "Edit Salon Profile" %} </a>
+                            </p>
+                            <p>
+                                <a class="delete_btn" href="/administration/salon/delete/{{salon.id}}/">{% trans "Delete this Salon" %} </a>
+                            </p>
+                        </center>
+						 {% endblock %}
+                   
+           
+        </td>
+    </tr>
+</table>
+{% endblock %}

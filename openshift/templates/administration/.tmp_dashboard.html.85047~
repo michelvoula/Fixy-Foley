@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE|default:"en-us" }}" xml:lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+
+</head>
+{% load i18n %}
+<body>
+
+{% block content %}
+
+<table border="0">
+    <tr>
+        <td colspan=4 style="text-align:left;">
+		
+		DASHBOARD
+        </td>
+       
+    </tr>
+    <tr>
+        <td>
+        	
+			<table border="0">
+    <tr class="table_title">
+        <td colspan=2 style="text-align:left;" >
+		
+		Your Salons Bookings this week
+        </td>
+		
+        
+    </tr>
+    <tr class="table_header">
+        <td>
+        	Salon
+        </td>
+        <td>
+        	Booking
+        </td>
+    </tr>
+    <tr>
+        <td>
+        	PONSON BY
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+
+
+{% endblock %}
+</body>
+</html>

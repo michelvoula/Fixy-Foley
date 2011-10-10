@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>Add {{ field }}</title>
+        <link href="/site_media/js/jquery/css/ui-lightness/jquery-ui-1.8.11.custom.css" media="screen" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="/site_media/js/jquery/js/jquery-1.5.1.min.js">
+        </script>
+        <script type="text/javascript" src="/site_media/js/jquery/js/jquery-ui-1.8.11.custom.min.js">
+        </script>
+        <script src="{{ ADMIN_MEDIA_PREFIX }}js/admin/RelatedObjectLookups.js">
+        </script>
+        <script type="text/javascript" src="/site_media/controllers/posts.js">
+        </script>
+    </head>
+    <body>
+        <h1>Add {{ field }}</h1>
+        {% if errors %}
+        <p class="errornote">
+            Errors
+        </p>
+        {{ webVideoForm.form.non_field_errors }}
+        {{ mediaForm.form.non_field_errors }}
+        {% endif %}
+        <div id="tabs1">
+            <ul>
+                <li>
+                    <a href="#content1">From Gallery</a>
+                </li>
+                <li>
+                    <a href="#content2">Insert New  Video</a>
+                </li>
+                <li>
+                    <a href="#content3">Video From the Web</a>
+                </li>
+            </ul>
+            <div id="content1">
+                <form method="POST" action="/addVideo/ExistingMedia">
+                    {% csrf_token %}
+                    <table border="0">
+                        {% for video in videos.all %}
+                        <tr>
+                            <td>
+                                <span id="span{{ video.id }} ">{{video.str_name}}</span>
+                            </td>
+                            {% if video.str_type == "video" %}
+                            <td>
+                                <span id="span{{ video.id }} "><embed name="plugin" type="application/x-shockwave-flash" src="/site_media/{{ video.str_file}}?autoplay=1" width="100" height="100"/></span>
+								
+                            </td>
+							
+                            <td>
+                                <input type="radio" name="videoToAdd" value="/site_media/{{ video.str_file }}" />
+                            </td>
+							{% endif %}
+							{% if video.str_type == "video_url" %}
+                            <td>
+                                <a href="{{ video.str_url}} ">Show the Video</a>
+                            </td>
+                            <td>
+                                <input type="radio" name="webVideoToAdd" value="{{ video.id }}" />
+                            </td>
+							{% endif %}
+                        </tr>{% endfor %}
+                        <tr>
+                            <th>
+                                <label for="id_int_width">
+                                    Width:
+                                </label>
+                            </th>
+                            <td>
+                                <input id="id_int_width" type="text" class="" name="int_width" size="40" />
+                            </td>
+							<td></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="id_int_height">
+                                    Height:
+                                </label>
+                            </th>
+                            <td>
+                                <input id="id_int_height" type="text" class="" name="int_height" size="40" />
+                            </td>
+							<td></td>
+                        </tr>
+                    </table>
+                    <p>
+                        <input type="submit" />| <a href="javascript:window.close()">Cancel</a>
+                    </p>
+                </form>
+            </div>
+            <div id="content2">
+                <form action="/addVideo/NewMedia" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table>
+                        {{ mediaForm.as_table }} 
+                    </table>
+                    <p>
+                        <input type="submit" value="Submit">
+                    </p>
+                </form>
+            </div>
+            <div id="content3">
+                <form action="/addVideo/WebMedia" method="POST">
+                    {% csrf_token %}
+                    <table>
+                        {{ webVideoForm.as_table }} 
+                    </table>
+                    <p>
+                        <input type="submit" value="Submit">
+                    </p>
+                </form>
+            </div>
+            <script type="text/javascript">
+                display("jobs.html.jsp", "#div_jobs");
+            </script>
+        </div>
+        </div>
+        <script type="text/javascript">
+            //jquery maggic tabs script
+            var target = jQuery('div#tabs1');
+            target.tabs({
+                event: 'click'
+            });
+        </script>
+    </body>
+</html>

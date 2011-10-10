@@ -1,0 +1,31 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% block extrahead %}{{ block.super }}
+
+<link href="/site_media/css/fixy.css" media="screen" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+{% block title %}{{ title }} | {% trans 'Fixy site admin' %} {% endblock %}
+
+{% block branding %}
+
+<h1 id="site-name">{% trans 'Fixy administration' %}</h1>
+<form action="/i18n/setlang/" method="post">
+{% csrf_token %}
+<input name="next" type="hidden" value="." />
+<select name="language">
+{% for lang in LANGUAGES %}
+<option value="{{ lang.0 }}" {% if request.LANGUAGE_CODE == lang.0 %}
+
+selected="true"
+
+{% endif %}
+>{{ lang.1 }}</option>
+{% endfor %}
+</select>
+<input type="submit" value="Go" />
+</form>
+
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

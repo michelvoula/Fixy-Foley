@@ -1,0 +1,73 @@
+{% extends "site_template.html" %}
+
+{% block content %}
+<center>
+<h1>Welcome to {{stylist.salon.str_name}} Salon</h1></center>
+
+<table width="100%" border="0">
+    <tr>
+        <td width='30%'>
+        	
+			Your Stylists
+			<ul>
+				{% for stylist in stylist.salon.stylist_set.all %}
+    <li><a href="/salon/stylist/view/{{stylist.id}}/">{{ stylist.str_first_name }} - {{ stylist.str_last_name }}</a></li>
+{% endfor %}
+				
+			</ul>
+			
+			
+        </td>
+        <td width='70%'>
+        	
+			
+			<h2 class="claroToolTitle">Stylist Profile </h2>
+<table  border="0">
+	 <tr valign='top'>
+         
+         <td class='tdleft' colspan="2">
+         	<a href="/site_media/{{stylist.img_photo}}" target="_blank"><img src="/site_media/{{stylist.img_photo}}" alt="No Photo" width="100" height="100"/></a>
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Stylist Name:
+        </td>
+         <td class='tdleft'>
+         	{{stylist.str_first_name}} {{stylist.str_last_name}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Specialities :
+        </td>
+         <td class='tdleft'>
+         		{{stylist.str_specialities}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Phone Number:
+        </td>
+         <td class='tdleft'>
+         	{{stylist.str_phone}}
+        </td>
+    </tr>
+    <tr valign='top'>
+         <td class='tdright'>
+        	Email:
+        </td>
+         <td class='tdleft'>
+         	{{stylist.str_email}}
+        </td>
+    </tr>
+   
+	</table>
+			
+        </td>
+    </tr>
+</table>
+
+
+
+{% endblock %}

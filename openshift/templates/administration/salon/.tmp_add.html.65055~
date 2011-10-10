@@ -1,0 +1,35 @@
+{% extends "salon/user_salons.html" %}
+ {% load i18n admin_modify adminmedia %}
+   {% block extrastyle %}
+   {{ block.super }}
+      
+       <link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
+     
+  {% endblock %}
+{% load i18n %} 
+{% block salon_detail %}
+
+<h1>{% trans "Add" %} {{salon.str_name}} Salon</h1>
+<p>
+	{% if errors %}
+    <p class="errornote">
+    {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+{% endif %}
+</p>
+<form action="/salon/add/" method="post">
+	{% csrf_token %}
+	<table>
+		
+{{form.as_table}} 	
+
+</table>
+<input type="submit" value="{% trans "Save" %}"/>
+</form>
+
+
+{% endblock %}
+
+{% block salon_photo %}
+{% endblock %}

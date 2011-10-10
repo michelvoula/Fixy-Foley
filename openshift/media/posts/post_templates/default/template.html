@@ -1,0 +1,38 @@
+<html>
+<head>
+	
+
+<script type="text/javascript" src="/site_media/js/jquery/js/jquery-1.5.1.min.js">
+</script>
+<script type="text/javascript" src="/site_media/js/jquery/js/jquery-ui-1.8.11.custom.min.js">
+</script>
+<script type="text/javascript" src="/site_media/js/jquery/jquery.form.js">
+</script>
+
+
+
+	
+</head>
+
+<body>
+<h1>{{ post.str_post_title }}</h1>
+By <h1>{{ post.author }}</h1>
+<h2>{{ post.str_post_summary }}</h2>
+
+
+<div id="postcontent" style="">
+	{% autoescape off %}
+   {{ post.str_post_content }}
+{% endautoescape %}
+</div>
+
+<div id="postcontent2"></div>
+
+
+
+	</body>
+</html>
+<script type="text/javascript">
+	
+
+</script>
