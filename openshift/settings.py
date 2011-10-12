@@ -36,10 +36,10 @@ if ON_OPENSHIFT:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': os.path.join(PROJECT_DIR, 'sqlite3.db'),  # Or path to database file if using sqlite3.
-            'USER': '',                      # Not used with sqlite3.
-            'PASSWORD': '',                  # Not used with sqlite3.
+            'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'fixy_db',  # Or path to database file if using sqlite3.
+            'USER': 'sample',                      # Not used with sqlite3.
+            'PASSWORD': 'welcome1',                  # Not used with sqlite3.
             'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         }
@@ -146,7 +146,10 @@ MIDDLEWARE_CLASSES = (
     
 )
 
-ROOT_URLCONF = 'openshift.urls'
+if ON_OPENSHIFT:
+	ROOT_URLCONF = 'openshift.urls'
+else:
+	ROOT_URLCONF = 'urls'
 
 
 
@@ -155,24 +158,55 @@ STATICFILES_DIRS = (
     ("downloads",os.path.join(PROJECT_DIR, 'downloads')),
 )
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
+
+if ON_OPENSHIFT:
+	INSTALLED_APPS = (
+    		'django.contrib.auth',
+		'django.contrib.contenttypes',
+	        'django.contrib.sessions',
+    		'django.contrib.sites',
+    		'django.contrib.messages',
+   		# 'django.contrib.staticfiles',
+    		#'grappelli',
+    		#'filebrowser',
+    		# Uncomment the next line to enable the admin:
+     		'django.contrib.admin',
+     		'openshift.salon',
+     		'openshift.fixy_cms',
+     		'openshift.medias',
+      		'openshift.tekextensions',
+         # Uncomment the next line to enable admin documentation:
+     		'django.contrib.admindocs',
+	)
+else:
+
+	PROJECT_APPS=(
+    		'salon',
+     		'fixy_cms',
+     		'medias',
+      		'tekextensions',
+      		'django_jenkins',
+	)
+
+	INSTALLED_APPS = (
+    		'django.contrib.auth',
+    		'django.contrib.contenttypes',
+    		'django.contrib.sessions',
+    		'django.contrib.sites',
+    		'django.contrib.messages',
    # 'django.contrib.staticfiles',
     #'grappelli',
     #'filebrowser',
     # Uncomment the next line to enable the admin:
-     'django.contrib.admin',
-     'openshift.salon',
-     'openshift.fixy_cms',
-     'openshift.medias',
-      'openshift.tekextensions',
+     		'django.contrib.admin',
+     		'salon',
+     		'fixy_cms',
+     		'medias',
+      		'tekextensions',
+      		'django_jenkins',
          # Uncomment the next line to enable admin documentation:
-     'django.contrib.admindocs',
-)
+     		'django.contrib.admindocs',
+	)
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.auth",
