@@ -1,10 +1,11 @@
-from django.conf.urls.defaults import patterns, include, url
+
+from django.conf.urls.defaults import patterns, include,url, handler500, handler404
 from django.conf import settings
 import os
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
-
+handler500='public.views.err500'
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'openshift.views.home', name='home'),

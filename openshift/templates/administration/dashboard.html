@@ -117,14 +117,18 @@
                         <span class="dashboard_table_title">{% trans "YOUR ADMINS" %} </span>
                         <P>
                         </p>
-                        <span class="block_title2"><b>{% trans "Branch Managers" %}</b></span>
-                        <ul>
-                            {% for admin in admins %}
+                        {% for role in roles %}
+                        <div class="salon_admin_list_title">
+                            {{ role.name }}:
+                        </div>
+                        <ul class="salon_admin_list">
+                            {% for salonAdmin in role.salonadmin_set.all %}
                             <li>
-                                {{ admin.user.first_name }}  {{ admin.user.last_name }}
+                                {{ salonAdmin.user.first_name }} {{ salonAdmin.user.last_name }}
                             </li>
                             {% endfor %}
                         </ul>
+                        {% endfor %}
                     </div>
                     <div class="go_div">
                         <a href="/administration/users/">{% trans "Go" %}</a>

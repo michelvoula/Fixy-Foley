@@ -1,37 +1,72 @@
 {% extends "administration/salon_admin.html" %}
 {% load i18n %} 
 {% block content %}
-<h1><a href="/administration/salon/{{salon.id}}/">{{ salon.str_name }} Salon Services</a>  </h1>
-<p></p>
 
+<div class="admin_page_title">{% trans "Services" %}</div>
+		<br/>
+			
 <table border="0">
     <tr>
-        <td>       	
-			
-			{% trans "Your Services" %}
-			<ul class="salon_list">
+        <td  width='200' class=""> 
+		  <div style="text-align:left;">
+		 {% trans "Salon" %}
+		      
+                
+                    <select name="salon_id" onchange="window.location.replace('/administration/salon/service/'+this.value+'/')">
+                        {% for salonadmin in user.salonadmin_set.all %}
+                        {% for salonmanager in salonadmin.salonmanager_set.all %}
+						<option value="{{salonmanager.salon.id}}" {%  if salonmanager.salon.id == salon.id %}selected{%  endif %}>
+
+                        {{ salonmanager.salon.str_name }}
+
+                        </option>
+                        {% endfor %}
+                        {% endfor %}
+                    </select>
+                    </div>    
+            </div>
+            <br/>
+            <br/>     	
+		
+			<ul class="admin_list_left">
 				{% for salonservice in salon.salonservice_set.all %}
     <li><a href="/administration/salon/service/view/{{salonservice.id}}/">{{ salonservice.service.str_name }}</a></li>
 {% endfor %}
 				
 			</ul>
+			<br/>
+			<br/>
+		
+        </td>
+		
+        <td width='400' class="admin_detail_td">
+            <div class="admin_detail">
+        	{% block service_detail %}
 			
-		{% if perms.salonservice.add_salonservice %}
+			
+			{% endblock %}
+			
+</div>
+			
+        </td>
+		 <td class="admin_photo_menu_td" width="200">
+		 	{% block service_menu %}
+			{% if perms.salonservice.add_salonservice %}
 			
 			<a href="/administration/salon/service/add/{{salon.id}}/">{% trans "Add New Service" %}</a>
 			
 			{% endif %}
-        </td>
-		
-        <td >
-        	{% block service_detail %}
-			
-			
-			
+			 <br/>
+			  <br/>
+			  {% if perms.salonservice.edit_salonservice %}<a href="/administration/salon/service/edit/{{service.id}}/">{% trans "Edit This Service" %}</a>
+            {% endif %}
+            <br/>
+			 <br/>
+            {% if perms.salonservice.delete_salonservice %}<a href="/administration/salon/service/delete/{{service.id}}/">{% trans "Delete This Service" %}</a>
+            {% endif %}
 			{% endblock %}
-
-			
-        </td>
+		 	 </td>
+			 
 		
     </tr>
    

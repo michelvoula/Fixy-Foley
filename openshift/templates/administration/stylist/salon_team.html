@@ -9,10 +9,7 @@
         <td width='200' class="admin_list_td">
             <div>
                 {% trans "Choose Salon" %}
-                <br/>
-                <form method="post" action="/administration/salon/stylists/">
-                    {% csrf_token %}
-                    <select name="salon_id">
+               <select name="salon_id" onchange="window.location.replace('/administration/salon/stylist/'+this.value+'/')">
                         {% for salonadmin in user.salonadmin_set.all %}
                         {% for salonmanager in salonadmin.salonmanager_set.all %}
 						<option value="{{salonmanager.salon.id}}" {%  if salonmanager.salon.id == salon.id %}selected{%  endif %}>
@@ -23,8 +20,7 @@
                         {% endfor %}
                         {% endfor %}
                     </select>
-                    <input type="submit" value="{% trans "Show Stylists" %}">
-                </form>
+                 
             </div>
             <br/>
             <br/>
@@ -51,10 +47,7 @@
             {% block admin_photo %}<img src="/site_media/{{stylist.img_photo}}" alt="Photo" width="200" height="200"/>
             <br/>
             <br/>
-            <form action="/administration/salon/stylist/edit_photo/{{stylist.id}}/" method="POST" enctype="multipart/form-data">
-                {% csrf_token %} 
-                {{photo_form.as_p}} <input type="submit" value="{% trans "Upload/Change Image" %}"/>
-            </form> {% endblock %}
+             {% endblock %}
             {% block admin_menu %}
             {% if perms.salonstylist.add_salonstylist %}
             <br/>

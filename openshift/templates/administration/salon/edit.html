@@ -19,19 +19,61 @@
 <form action="/administration/salon/edit/{{salon.id}}/" method="post">
     {% csrf_token %}
     <table>
-        {{form.as_table}} 
+        {{form.as_table}}
+		<tr>
+<th colspan="2">{% trans "Opening Hours" %}:</th>
+</tr>
+<tr><td colspan="2">
+	
+	<table>
+    <tr>
+        <th>
+        </th>
+        <th>
+        	{% trans "open" %}
+        </th>
+        <th>
+        	{% trans "close" %}
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    	
+	{% for day in day_form_list %}
+ <tr>
+   
+        <th>
+        	{{day.0.1 }}
+        </th>
+        <td>
+        	{{day.1.open }}
+			{{day.1.open.errors }}
+        </td>
+        <td>
+        	{{day.1.close }}
+			{{day.1.close.errors }}
+        </td>
+        <td>
+        	{{day.1.closed }}{{day.1.closed.label_tag }}
+        </td>
+	
+    </tr>
+	
+	{% endfor %}
+</table>
+</td> 
     </table>
     <input type="submit" value="{% trans "Save" %}"/>
-</form>
-
-{% endblock %}
-{% block salon_photo %}
-{% endblock %}
+</form>{% endblock %}
+{% block salon_photo %}<img src="/site_media/{{salon.img_photo}}" alt="Photo" width="200" height="200"/>
+<br/>
+<form action="/administration/salon/edit_photo/{{salon.id}}/" method="POST" enctype="multipart/form-data">
+    {% csrf_token %} 
+    {{photo_form.as_p}} <input type="submit" value="{% trans "Upload/Change Image" %}"/>
+</form> {% endblock %}
 {% block salon_menu %}
-
-
 <p>
     <a href="">{% trans "Delete this Salon" %} </a>
 </p>
-
 {% endblock %}

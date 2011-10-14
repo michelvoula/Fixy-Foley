@@ -61,9 +61,9 @@ def login_user(request):
 
 @login_required
 def dashboard(request):
-    adminrole=AdminRole.objects.all()
+    #adminrole=AdminRole.objects.all()
         
-    admins=SalonAdmin.objects.filter(role=adminrole)
+    roles=AdminRole.objects.all()
     
     template="administration/dashboard.html"
     
@@ -73,7 +73,7 @@ def dashboard(request):
     
     services=SalonService.objects.filter(salon__administrator__user__id=request.user.id)[:10]
     
-    page_context={"admins":admins,"salons":salons,"stylists":stylists,"services":services}
+    page_context={"roles":roles,"salons":salons,"stylists":stylists,"services":services}
     
     return render_to_response(template,page_context, context_instance=RequestContext(request)) 
 
@@ -94,6 +94,7 @@ def view_admin(request,user_id):
 def add_admin(request):
     user_form=SalonAdminUserForm(prefix="user")
     admin_user_form=SalonAdminForm(prefix="compl")
+    salons=Salon.objects.all()
     
     
     roles=AdminRole.objects.all()
@@ -105,12 +106,26 @@ def add_admin(request):
         if user_form.is_valid() and admin_user_form.is_valid():
             
             user=user_form.save()
-            
-            user.save()
+
             
             admin_user=admin_user_form.save(commit=False)
+            print request.POST.get("compl-salons")
+            
             admin_user.user=user
             admin_user.save()
+            
+            serviceList=request.POST.get("salonList")
+                    
+            try :
+                listidx = serviceList.split(',')
+                for l in listidx:
+                    salon =get_object_or_404(Salon, pk=l)
+                    salonManager=SalonManager()
+                    salonManager.salon=salon
+                    salonManager.admin=admin_user
+                    salonManager.save()
+            except Exception:
+                listidx=None            
             
             service_priv=int(request.POST.get("service_priv"))
             
@@ -134,25 +149,49 @@ def add_admin(request):
             return HttpResponseRedirect("/administration/users/")
                             
     template="administration/admin/add.html"
-    page_context={"user_form":user_form,"admin_user_form":admin_user_form,"roles":roles}
+    page_context={"user_form":user_form,"admin_user_form":admin_user_form,"roles":roles,"salons":salons}
     
     return render_to_response(template,page_context, context_instance=RequestContext(request)) 
 @login_required      
 def edit_admin(request,user_id):
+    salons=Salon.objects.all()
     admin_user=get_object_or_404(SalonAdmin, pk=user_id)
-    user_form=SalonAdminUserForm(instance=admin_user.user,prefix="user")
+    user_form=EditSalonAdminUserForm(instance=admin_user.user,prefix="user")
     admin_user_form=SalonAdminForm(instance=admin_user,prefix="compl")
     roles=AdminRole.objects.all()
         
     if request.POST:
-        user_form=SalonAdminUserForm(request.POST,instance=admin_user.user,prefix="user")
+        user_form=EditSalonAdminUserForm(request.POST,instance=admin_user.user,prefix="user")
         admin_user_form=SalonAdminForm(request.POST,instance=admin_user,prefix="compl")
         
         if user_form.is_valid() and admin_user_form.is_valid():
             
             user=user_form.save()
-            user.set_password(request.POST.get("user-password")) 
+            
+            password=request.POST.get("account-password")
+            print password
+            if password:
+                user.set_password(password)
             admin_user=admin_user_form.save(commit=False)
+            
+            #print request.POST.get("compl-salons")
+            serviceList=request.POST.get("salonList")
+            SalonManager.objects.filter(admin__id=admin_user.id).delete()
+            
+            try :
+                listidx = serviceList.split(',')
+                for l in listidx:
+                    salon =get_object_or_404(Salon, pk=l)
+                    salonManager=SalonManager()
+                    salonManager.salon=salon
+                    salonManager.admin=admin_user
+                    salonManager.save()
+            except Exception:
+                listidx=None
+            
+            admin_user.save()
+            
+            
             
             
             
@@ -162,8 +201,7 @@ def edit_admin(request,user_id):
             edit_permission=Permission.objects.filter(codename="change_salonservice")
             view_permission=Permission.objects.filter(codename="view_salonservice")
             delete_permission=Permission.objects.filter(codename="delete_salonservice")
-            print view_permission[0].id
-            print service_priv
+           
             if service_priv >= 2:
                                
                 user.user_permissions.add(view_permission[0])
@@ -213,9 +251,9 @@ def edit_admin(request,user_id):
     if admin_user.user.has_perm("salon.change_salonservice"):
         service_priv=3
         
-    print service_priv
+    
     template="administration/admin/edit.html"
-    page_context={"user_form":user_form,"admin_user_form":admin_user_form,"roles":roles,"admin_user":admin_user,"salon_priv":salon_priv,"service_priv":service_priv}
+    page_context={"salons":salons,"user_form":user_form,"admin_user_form":admin_user_form,"roles":roles,"admin_user":admin_user,"salon_priv":salon_priv,"service_priv":service_priv}
     
     return render_to_response(template,page_context, context_instance=RequestContext(request)) 
 @login_required       

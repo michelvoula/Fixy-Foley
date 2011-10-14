@@ -23,7 +23,34 @@ def delete_salon_stylist(request,stylist_id):
     salon=stylist.salon    
     #delete the stylist
     stylist.delete()
-    return HttpResponseRedirect("/administration/salon/"+str(salon.id))    
+    return HttpResponseRedirect("/administration/salon/"+str(salon.id))
+@login_required 
+def userServices(request, user_id):
+    
+    salons=SalonManager.objects.filter(admin__user__id=user_id)
+    salon=None
+    if salons :
+        salon=salons[0]
+        return HttpResponseRedirect("/administration/salon/service/"+str(salon.salon.id))
+    else:
+        form=SalonForm()
+        page_context={"form":form}
+        return render_to_response('administration/salon/add.html',page_context, context_instance=RequestContext(request))  
+
+
+@login_required 
+def userStylists(request, user_id):
+    
+    salons=SalonManager.objects.filter(admin__user__id=user_id)
+    salon=None
+    if salons :
+        salon=salons[0]
+        return HttpResponseRedirect("/administration/salon/stylist/"+str(salon.salon.id))
+    else:
+        form=SalonForm()
+        page_context={"form":form}
+        return render_to_response('administration/salon/add.html',page_context, context_instance=RequestContext(request))  
+
 @login_required 
 def userSalons(request, user_id):
     
@@ -78,7 +105,7 @@ def edit_salon_photo(request,salon_id,form=None):
             salon =form.save()
             #print "after" +    salon.img_photo.url
             #salon.img_photo =request.POST.get("img_photo")
-    return HttpResponseRedirect("/administration/salon/"+str(salon.id))
+    return HttpResponseRedirect("/administration/salon/edit/"+str(salon.id))
 @login_required 
 def edit_stylist_photo(request,stylist_id,form=None):
     stylist =get_object_or_404(Stylist, pk=stylist_id)
@@ -92,11 +119,24 @@ def edit_stylist_photo(request,stylist_id,form=None):
 
 @login_required 
 def add_salon(request,form=None):
+    day_form_list=list()
+    for day in DAYS_OF_WEEK:
+        hform=OpeningHourForm(prefix="hof"+str(day[0]))
+        day_form_list.append((day,hform))
+    form=SalonForm()   
    
     
     if request.method == 'POST':
+        valid_forms=True
+        day_form_list=list()
+        for day in DAYS_OF_WEEK:
+            hform=OpeningHourForm(request.POST,prefix="hof"+str(day[0]))
+            day_form_list.append((day,hform))
+            if not hform.is_valid():
+                valid_forms=False
+                
         form=SalonForm(request.POST)
-        if form.is_valid(): 
+        if form.is_valid() and  valid_forms: 
             #print "ok dss" 
                 
             salon =form.save()
@@ -105,26 +145,61 @@ def add_salon(request,form=None):
             salonManager.admin=salon.administrator
             salonManager.save()
             
+            for hl in day_form_list:
+                hform=hl[1]
+                day=hl[0]
+                hday=hform.save(commit=False)
+                hday.salon=salon
+                hday.day=day[0]
+                hday.save()
+                
             
             return HttpResponseRedirect("/administration/salon/"+str(salon.id))
             #salon.img_photo =request.POST.get("img_photo")
         
-    form=SalonForm()
-    page_context={"form":form}
+    
+    page_context={"form":form,"days_of_week":DAYS_OF_WEEK,"day_form_list":day_form_list}
     return render_to_response('administration/salon/add.html',page_context, context_instance=RequestContext(request))  
     
 @login_required 
 def edit_salon(request,salon_id,form=None):
     salon =get_object_or_404(Salon, pk=salon_id)
     form=SalonForm(instance=salon)
+    photo_form=SalonPhotoForm(instance=salon)
+    
+    day_form_list=list()
+    for day in DAYS_OF_WEEK:
+        hdays=OpeningHour.objects.filter(salon__id=salon.id,day=day[0])
+        if hdays:
+            hday=hdays[0]
+            hform=OpeningHourForm(prefix="hof"+str(day[0]),instance=hday)
+            day_form_list.append((day,hform))
+        
     if request.method == 'POST':
         form=SalonForm(request.POST, instance=salon)
-        if form.is_valid(): 
+        valid_forms=True
+        day_form_list=list()
+        for day in DAYS_OF_WEEK:
+            hdays=OpeningHour.objects.filter(salon__id=salon.id,day=day[0])
+            if hdays:
+                hday=hdays[0]
+                hform=OpeningHourForm(request.POST,prefix="hof"+str(day[0]),instance=hday)
+                day_form_list.append((day,hform))
+                if not hform.is_valid():
+                    valid_forms=False
+        
+        if form.is_valid() and valid_forms: 
             #print "ok dss"       
             salon =form.save()
             
             salonManager=SalonManager.objects.filter(admin__id=salon.administrator.id,salon__id=salon.id)
-            print salonManager
+            
+            
+            for hl in day_form_list:
+                hform=hl[1]
+                day=hl[0]
+                hday=hform.save()                
+            
             if not salonManager :
                 
                 salonManager=SalonManager()
@@ -136,7 +211,7 @@ def edit_salon(request,salon_id,form=None):
             return HttpResponseRedirect("/administration/salon/"+str(salon.id))
             #salon.img_photo =request.POST.get("img_photo")
                 
-    page_context={"salon":salon,"form":form}
+    page_context={"salon":salon,"form":form,"photo_form":photo_form,"day_form_list":day_form_list}
     return render_to_response('administration/salon/edit.html',page_context, context_instance=RequestContext(request))  
 
 @login_required    
@@ -222,7 +297,7 @@ def add_job(request,pop_up):
                 job =form.save()
                 if pop_up:
                     return HttpResponse('<script type="text/javascript">window.close();opener.updateCombo("%s", "%s", "%s");</script>' % \
-                    (escape(pop_up),escape(job.id), escape(job.str_name)))
+                    (escape("id_primary-jobTitle"),escape(job.id), escape(job.str_name)))
     page_context={"form":form}
     return render_to_response('administration/stylist/add_job.html',page_context, context_instance=RequestContext(request))  
 
@@ -234,11 +309,18 @@ def add_service(request,pop_up):
             if form.is_valid(): 
                 service =form.save()
                 if pop_up:
-                    return HttpResponse('<script type="text/javascript">window.close();opener.updateCombo("%s", "%s", "%s");</script>' % \
-                    (escape(pop_up),escape(service.id), escape(service.str_name)))
+                    return HttpResponse('<script type="text/javascript">window.close();</script>')
+                    #return HttpResponse('<script type="text/javascript">window.close();opener.updateCombo("%s", "%s", "%s");</script>' % \
+                    #(escape(pop_up),escape(service.id), escape(service.str_name)))
     page_context={"form":form}
     return render_to_response('administration/service/add_type.html',page_context, context_instance=RequestContext(request))  
-        
+ 
+@login_required        
+def salon_service_form(request):    
+    if request.POST:
+        salon_id=int(request.POST.get("salon_id"))
+        return HttpResponseRedirect("/administration/salon/service/"+str(salon_id)+"/")
+          
 @login_required        
 def salon_teams(request):
     
@@ -399,5 +481,11 @@ def edit_salon_stylist(request,stylist_id,form=None):
             #salon.img_photo =request.POST.get("img_photo")    
     #print discount_type_form
     page_context={"salon":salon,"discount_type":discount_type,"stylist":stylist,"form":form,"photo_form":photo_form,"discount_type_form":discount_type_form}
-    return render_to_response('administration/stylist/edit.html',page_context, context_instance=RequestContext(request))  
+    return render_to_response('administration/stylist/edit.html',page_context, context_instance=RequestContext(request))
+
+
+def show_calendar(request):
+    template="administration/calendar/index.html"
+    page_context={"template":"default",}
+    return render_to_response(template,page_context, context_instance=RequestContext(request))  
     

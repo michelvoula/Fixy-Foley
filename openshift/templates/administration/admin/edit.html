@@ -5,6 +5,25 @@
 <link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
 {% endblock %} 
 {% load i18n %} 
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript">
+    
+    function getSelectedVals(name, value){
+        var tmp = [];
+        $("input[name='" + name + "']").each(function(){
+            if ($(this).attr('checked')) {
+                checked = ($(this).val());
+                tmp.push(checked);
+            }
+        });
+        var filters = tmp.join(',');
+        $('#' + value).val(filters);
+        //alert(filters)
+        return filters;
+    }
+</script>
+{% endblock %}
 {% block user_detail %}<h1>{% trans "Edit Salon Admin" %}  {{ admin_user.user.firstname }}</h1>
 <p>
     {% if errors %}
@@ -25,6 +44,8 @@
                     </legend>
                     <table>
                         {{ user_form }}
+						<th> {% trans "Password" %}:</th>
+						<td><input type="password" name="account-password"/></td>
                     </table>
                 </fieldset>
                 <fieldset>
@@ -32,90 +53,121 @@
                         {% trans "Salon and Role" %}:
                     </legend>
                     <table>
-                        {{ admin_user_form }}
+                        <tr>
+                        <th>
+                            {% trans "Salons" %}:
+                        </th>
+                        <td>
+                            <ul class="list-style-none">
+                                {% for salon in salons%}
+                                <li style="list-style:none">
+                                    {{ salon.str_name }}<input type="checkbox" name="salons" value="{{ salon.id }}" id="chk{{salon.id}}" onchange="getSelectedVals('salons','salonList')"/>
+                                </li>{% endfor %}
+                            </ul><input type="hidden" name="salonList" id="salonList"/>
+                            <script type="text/javascript">
+                                                                                                								
+                                                                                                								{% for salon in admin_user.salons.all%}
+                                                                                                								
+                                                                                                								 $('#chk{{salon.id}}' ).attr('checked',true);
+                                                                                                								
+                                                                                                								{% endfor %}
+                                                                                                								getSelectedVals('salons','salonList');
+                                                                                                							
+                                                                                            
+                                                            
+                            </script>
+                        </td>
+                      
+                    </tr>
+					<tr>
+						<th>{{ admin_user_form.role.label_tag }}</th>
+						<td>{{ admin_user_form.role }}</td>
+						
+					</tr>
+                    
                     </table>
                 </fieldset>
                 <table border="0">
                     <tr>
                         <td>
-                        <fieldset>
-                            <legend>
-                                {% trans "Appointment Calendar" %}:
-                            </legend>
-                            <ul>
-                                <li>
-                                    <input type="radio" name="appointment_priv" value="1" {% if appointment_priv != 2 and appointment_priv != 3  %}checked{% endif %}/>no permission
-                                </li>
-                                <li>
-                                    <input type="radio" name="appointment_priv" value="2" {% if appointment_priv == 2 %}checked{% endif %}/>view only
-                                </li>
-                                <li>
-                                    <input type="radio" name="appointment_priv" value="3" {% if appointment_priv == 2 %}checked{% endif %}/>view and edit
-                                </li>
-                            </ul>
-                        </fieldset>
-                        <td>
                             <fieldset>
                                 <legend>
-                                    {% trans "Salon profile" %}:
+                                    {% trans "Appointment Calendar" %}:
                                 </legend>
                                 <ul>
                                     <li>
-                                        <input type="radio" name="salon_priv" value="1" {% if salon_priv != 2 and salon_priv != 3  %} checked {% endif %}/>no permission
+                                        <input type="radio" name="appointment_priv" value="1" {%  if appointment_priv != 2  and appointment_priv != 3 %}checked{%  endif %}/>no permission
                                     </li>
                                     <li>
-                                        <input type="radio" name="salon_priv" value="2" {% if salon_priv == 2 %}checked{% endif %}/>view only
+                                        <input type="radio" name="appointment_priv" value="2" {%  if appointment_priv == 2 %}checked{%  endif %}/>view only
                                     </li>
                                     <li>
-                                        <input type="radio" name="salon_priv" value="3" {% if salon_priv == 3 %}checked{% endif %}/>view and edit
+                                        <input type="radio" name="appointment_priv" value="3" {%  if appointment_priv == 2 %}checked{%  endif %}/>view and edit
                                     </li>
                                 </ul>
                             </fieldset>
-                        </td>
-						 </tr>
-						 <tr>
-                        <td>
-                            <fieldset>
-                                <legend>
-                                    {% trans "Services" %}:
-                                </legend>
-                                <ul>
-                                    <li>
-                                        <input type="radio" name="service_priv" value="1" {% if service_priv != 2 and service_priv != 3  %}checked{% endif %} />no permission
-                                    </li>
-                                    <li>
-                                        <input type="radio" name="service_priv" value="2" {% if service_priv == 2 %}checked{% endif %}/>view only
-                                    </li>
-                                    <li>
-                                        <input type="radio" name="service_priv" value="3" {% if service_priv == 3 %}checked{% endif %}/>view and edit
-                                    </li>
-                                </ul>
-                            </fieldset>
-                        </td>
-                        <td>
-                        <fieldset>
-                        <legend>
-                            {% trans "Report" %}:
-                        </legend>
-                        <ul>
-                            <li>
-                                <input type="radio" name="report_priv" value="1" {% if report_priv != 2 and report_priv != 3  %}checked{% endif %}/>no permission
-                            </li>
-                            <li>
-                                <input type="radio" name="report_priv" value="2" {% if report_priv == 2 %}checked{% endif %}/>view only
-                            </li>
-                            <li>
-                                <input type="radio" name="report_priv" value="3" {% if report_priv == 3 %}checked{% endif %}/>view and edit
-                            </li>
-                        </ul>
-                        </td>
-                    </tr>
-                </table>
-                </fieldset><input type="submit" value="{% trans "Save" %}"/>
-            </form>
-        </td>
-        <td>
-        </td>
-    </tr>
-</table>
-{% endblock %}
+                            <td>
+                                <fieldset>
+                                    <legend>
+                                        {% trans "Salon profile" %}:
+                                    </legend>
+                                    <ul>
+                                        <li>
+                                            <input type="radio" name="salon_priv" value="1" {%  if salon_priv != 2  and salon_priv != 3 %}  checked {%  endif %}/>no permission
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="salon_priv" value="2" {%  if salon_priv == 2 %}checked{%  endif %}/>view only
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="salon_priv" value="3" {%  if salon_priv == 3 %}checked{%  endif %}/>view and edit
+                                        </li>
+                                    </ul>
+                                </fieldset>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <fieldset>
+                                        <legend>
+                                            {% trans "Services" %}:
+                                        </legend>
+                                        <ul>
+                                            <li>
+                                                <input type="radio" name="service_priv" value="1" {%  if service_priv != 2  and service_priv != 3 %}checked{%  endif %} />no permission
+                                            </li>
+                                            <li>
+                                                <input type="radio" name="service_priv" value="2" {%  if service_priv == 2 %}checked{%  endif %}/>view only
+                                            </li>
+                                            <li>
+                                                <input type="radio" name="service_priv" value="3" {%  if service_priv == 3 %}checked{%  endif %}/>view and edit
+                                            </li>
+                                        </ul>
+                                    </fieldset>
+                                </td>
+                                <td>
+                                    <fieldset>
+                                        <legend>
+                                            {% trans "Report" %}:
+                                        </legend>
+                                        <ul>
+                                            <li>
+                                                <input type="radio" name="report_priv" value="1" {%  if report_priv != 2  and report_priv != 3 %}checked{%  endif %}/>no permission
+                                            </li>
+                                            <li>
+                                                <input type="radio" name="report_priv" value="2" {%  if report_priv == 2 %}checked{%  endif %}/>view only
+                                            </li>
+                                            <li>
+                                                <input type="radio" name="report_priv" value="3" {%  if report_priv == 3 %}checked{%  endif %}/>view and edit
+                                            </li>
+                                        </ul>
+                                        </td>
+                                    </tr>
+                                    </table>
+                                </fieldset><input type="submit" value="{% trans "Save" %}"/>
+                                </form>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        </table>
+                        {% endblock %}

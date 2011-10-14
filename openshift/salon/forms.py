@@ -3,6 +3,21 @@ from django.forms import *
 from django.forms import RadioSelect
 from django.utils.translation import ugettext as _
 
+class OpeningHourForm(ModelForm):
+    days_of_week=DAYS_OF_WEEK
+    class Meta:
+        model=OpeningHour
+        exclude=('salon','day')
+
+class EditSalonAdminUserForm(ModelForm):
+    username=CharField(label=_('Login'),required=True,widget=forms.TextInput(attrs={'size':'40','class':'text95'}))
+    first_name=CharField(label=_('First Name'),required=True,widget=forms.TextInput(attrs={'size':'40','class':'text95'}))
+    last_name=CharField(label=_('Last Name'),required=True,widget=forms.TextInput(attrs={'size':'40','class':'text95',"type":"password"}))
+    #password=CharField(label=_('Password'),required=True,widget=PasswordInput(attrs={'size':'40','class':'text95',"type":"password"}))
+   
+    class Meta:
+        model=User
+        fields = ('username','first_name','last_name','email')
 
 class SalonAdminUserForm(ModelForm):
     username=CharField(label=_('Login'),required=True,widget=forms.TextInput(attrs={'size':'40','class':'text95'}))
@@ -17,7 +32,7 @@ class SalonAdminUserForm(ModelForm):
 class SalonAdminForm(ModelForm):
     class Meta:
         model=SalonAdmin
-        fields = ('salons','role')
+        fields = ('role',)
 
 
 class JobTitleForm(ModelForm):
@@ -27,10 +42,13 @@ class JobTitleForm(ModelForm):
 class ServiceForm(ModelForm):
     class Meta:
         model=Service
+        exclude=('status',)
 
 class SalonServiceForm(ModelForm):
     discount_type=ChoiceField(label=_('Discount options by service'),choices=SalonService.DISCOUNT_TYPE,required=True,widget=RadioSelect())
-    
+    def __init__(self,*args,**kwargs):
+        super (ModelForm,self ).__init__(*args,**kwargs) # populates the post
+        self.fields['service'].queryset = Service.objects.filter(status='active_service')
     
     class Meta:
         model=SalonService

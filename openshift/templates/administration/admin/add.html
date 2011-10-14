@@ -5,6 +5,25 @@
 <link href="/site_media/django/css/forms.css" media="screen" rel="stylesheet" type="text/css"/>
 {% endblock %} 
 {% load i18n %} 
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript">
+    
+    function getSelectedVals(name, value){
+        var tmp = [];
+        $("input[name='" + name + "']").each(function(){
+            if ($(this).attr('checked')) {
+                checked = ($(this).val());
+                tmp.push(checked);
+            }
+        });
+        var filters = tmp.join(',');
+        $('#' + value).val(filters);
+        //alert(filters)
+        return filters;
+    }
+</script>
+{% endblock %}              	
 {% block user_detail %}<h1>{% trans "Add Salon Admin" %} </h1>
 <p>
     {% if errors %}
@@ -32,7 +51,29 @@
                         {% trans "Salon and Role" %}:
                     </legend>
                     <table>
-                        {{ admin_user_form }}
+                         <table>
+                        <tr>
+                        <th>
+                            {% trans "Salons" %}:
+                        </th>
+                        <td>
+                            <ul class="list-style-none">
+                                {% for salon in salons%}
+                                <li style="list-style:none">
+                                    {{ salon.str_name }}<input type="checkbox" name="salons" value="{{ salon.id }}" id="chk{{salon.id}}" onchange="getSelectedVals('salons','salonList')"/>
+                                </li>{% endfor %}
+                            </ul><input type="hidden" name="salonList" id="salonList"/>
+                           
+                        </td>
+                      
+                    </tr>
+					<tr>
+						<th>{{ admin_user_form.role.label_tag }}</th>
+						<td>{{ admin_user_form.role }}</td>
+						
+					</tr>
+                    
+                    </table>
                     </table>
                 </fieldset>
                 <table border="0">

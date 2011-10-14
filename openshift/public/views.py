@@ -4,6 +4,15 @@ from django.contrib.auth import authenticate, login,logout
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+
+def err400(request):
+    template="400.html"
+    page_context={"template":template,}
+    return render_to_response(template,page_context, context_instance=RequestContext(request))
+def err500(request):
+    template="500.html"
+    page_context={"template":template,}
+    return render_to_response(template,page_context, context_instance=RequestContext(request))
 def index(request):
     template="index.html"
     page_context={"template":"default",}

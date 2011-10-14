@@ -1,0 +1,1 @@
+INSERT INTO salon_salonadmin (user_id,role_id) VALUES (1,1);

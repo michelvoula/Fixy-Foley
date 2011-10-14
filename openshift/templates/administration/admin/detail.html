@@ -6,66 +6,63 @@
 {% endblock %} 
 {% load i18n %} 
 {% if admin_user %}
-{% block user_detail %}
-			
-			
-			
-			
-<h1>{% trans "Admin:" %} {{admin_user.user.first_name}} </h1>
 
-<table border="0">
-    <tr>
+{% block user_detail %}
+<h2 class="detail_page_title">{% trans "Permissions" %}</h2>
+<br/>
+<br/>
+<table>
+	<tr>
+        <th>
+            {% trans "Login" %}:
+        </th>
         <td>
-            
-                <table>
-                    <tr>
-                        <td>
-                            {% trans "First Name" %}
-                        </td>
-                        <td>
-                            {{admin_user.user.first_name}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            {% trans "Last Name" %}
-                        </td>
-                        <td>
-                            {{admin_user.user.last_name}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {% trans "Email" %}
-                        </th>
-                        <td>
-                            {{admin_user.user.email}}
-                          </td>
-                    </tr>
-					
-					 <tr>
-                        <th>
-                            {% trans "Role" %}
-                        </th>
-                        <td>
-                            {{admin_user.role.name}}
-                          </td>
-                    </tr>
-                   
-                    
-                </table>
-             
-      
-{% endblock %}
-        	{% block menu_button %}
-           
-           
-            {% if perms.salonsalonadmin.edit_salonsalonadmin %}<a href="/administration/users/edit/{{admin_user.id}}/">{% trans "Edit this Admin" %}</a>
-            {% endif %}
-            <br/>
-            {% if perms.salonsalonadmin.delete_salonsalonadmin %}<a href="/administration/users/delete/{{admin_user.id}}/">{% trans "Delete This Admin" %}</a>
-            {% endif %}
-       	{% endblock %}
+            {{admin_user.user.username}}
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {% trans "First Name" %}:
+        </th>
+        <td>
+            {{admin_user.user.first_name}}
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {% trans "Last Name" %}:
+        </th>
+        <td>
+            {{admin_user.user.last_name}}
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {% trans "Email" %}:
+        </th>
+        <td>
+            {{admin_user.user.email}}
+        </td>
+    </tr>
+    <tr>
+        <th>
+            {% trans "Role" %}:
+        </th>
+        <td>
+            {{admin_user.role.name}}
+        </td>
     </tr>
 </table>
+{% endblock %}
+{% block menu_button %}
+{{ block.super }}
+<br/>
+<br/>
+{% if perms.salonsalonadmin.edit_salonsalonadmin %}<a href="/administration/users/edit/{{admin_user.id}}/">{% trans "Edit this Admin" %}</a>
+{% endif %}
+<br/>
+<br/>
+{% if perms.salonsalonadmin.delete_salonsalonadmin %}<a href="/administration/users/delete/{{admin_user.id}}/">{% trans "Delete This Admin" %}</a>
+{% endif %}
+{% endblock %}
 {% endif %}

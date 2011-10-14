@@ -41,6 +41,26 @@
 font-size: 18px;
 	}
 
+.salon_admin_list li a
+{
+	text-align: left;
+	text-transform: uppercase;
+	border: none;
+}
+
+.salon_admin_list_title
+{
+	text-align: left;
+	text-transform: uppercase;
+	border: none;
+	font-weight: bold;
+}
+.admin_list_left li a
+{
+	text-align: left;
+	text-transform: uppercase;
+	border: none;
+}
 .admin_list li a
 {
 	text-align: right;

@@ -3,11 +3,11 @@
 {% block content %}
 
 
-
+<div class="admin_page_title">{% trans "Salon Details" %}</div>
+		<br/>
 <table border="0">
     <tr>
-    	<div class="admin_page_title">{% trans "Salon Details" %}</div>
-		<br/>
+    	
         <td width='200' class="admin_list_td">
             <div class="admin_list_title">
                 {% trans "Your Salons" %}
@@ -42,10 +42,8 @@
                     	 {% block salon_photo %}
                         <img src="/site_media/{{salon.img_photo}}" alt="Photo" width="200" height="200"/>
                         <br/>
-                        <form action="/administration/salon/edit_photo/{{salon.id}}/" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %} 
-                            {{form.as_p}} <input type="submit" value="{% trans "Upload/Change Image" %}"/>
-                        </form>
+						<br/>
+                        
 						 {% endblock %}
 						  {% block salon_menu %}
                         <center>
